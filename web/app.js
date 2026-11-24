@@ -238,11 +238,11 @@ async function refreshAvailability() {
     const result = await response.json();
     if (!response.ok) throw new Error(result.error);
     availablePlaces = result.open;
-    $('#availability').innerHTML = `<span><strong>${result.booked}</strong> ${result.booked === 1 ? 'witness' : 'witnesses'} booked</span><span class="divider" aria-hidden="true"></span><span><strong>${result.open}</strong> open</span>`;
+    $('#availability').innerHTML = `<span><strong>${result.booked}</strong> ${result.booked === 1 ? 'Witness' : 'Witnesses'} Booked</span><span class="divider" aria-hidden="true"></span><span><strong>${result.open}</strong> Open</span>`;
     const cards = result.slots.map(slot => {
       const element = document.createElement('div');
       element.className = `slot${slot.booked ? ' booked' : ''}`;
-      element.setAttribute('aria-label', `Witness ${slot.number}: ${slot.booked ? 'booked' : 'open'}`);
+      element.setAttribute('aria-label', `Witness ${slot.number}: ${slot.booked ? 'Booked' : 'Open'}`);
       const picture = document.createElement('div');
       picture.className = 'slot-picture';
       const icon = document.createElement('i');
@@ -252,7 +252,7 @@ async function refreshAvailability() {
         const photo = document.createElement('img');
         photo.className = 'witness-avatar';
         photo.src = slot.photoUrl;
-        photo.alt = `Confirmed witness ${slot.number}`;
+        photo.alt = `Confirmed Witness ${slot.number}`;
         photo.width = 56; photo.height = 70;
         photo.addEventListener('error',()=>photo.replaceWith(icon),{once:true});
         picture.append(photo);
@@ -261,7 +261,7 @@ async function refreshAvailability() {
       label.textContent = `Witness ${slot.number}`;
       const tag = document.createElement('small');
       tag.className = `slot-tag${slot.booked ? ' confirmed' : ''}`;
-      tag.textContent = slot.booked ? 'Thankyou 😊' : 'Open Place';
+      tag.textContent = slot.booked ? 'Thank You 😊' : 'Open Place';
       element.append(picture,label,tag);
       return { number: slot.number, element };
     });
@@ -270,7 +270,7 @@ async function refreshAvailability() {
     $('#full-notice').hidden = result.open !== 0;
     updateSubmit();
   } catch {
-    $('#availability').textContent = 'Live availability unavailable. Please refresh.';
+    $('#availability').textContent = 'Live Availability Unavailable. Please Refresh.';
   }
 }
 refreshAvailability();

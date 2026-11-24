@@ -231,16 +231,19 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .success{container-type:inline-size}
 .success h2{font-size:28px;font-size:clamp(20px,8cqi,32px);line-height:1.2;letter-spacing:-.6px;white-space:nowrap}
 #success-name{color:var(--red)}
-.witness-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:18px}
-.witness-side{min-width:0;text-align:center}
+.witness-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.witness-side{position:relative;min-width:0;overflow:hidden;padding:22px 16px 17px;border:1px solid #d9e1ca;border-radius:21px;background:linear-gradient(145deg,#fffffff0,#f1f5e8e6);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c8d1b666,0 10px 27px #52673c0d;text-align:center}
+.witness-side:before{content:"";position:absolute;top:0;left:18px;right:18px;height:3px;border-radius:0 0 5px 5px;background:linear-gradient(90deg,#a4b07d,#e6e9d8,#d8c496)}
 .witness-side h3{font-family:Georgia,"Times New Roman",serif;font-size:20px;font-weight:400;line-height:1.3;color:var(--olive)}
-.witness-side>p{font-size:11px;color:var(--muted);margin:5px 0 13px}
+.witness-side>p{font-size:11px;color:var(--muted);margin:5px 0 16px}
 .witness-side .slots{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-@media(max-width:760px){.witness-groups{grid-template-columns:1fr;gap:25px}.witness-side h3{font-size:21px}.witness-side .slot{font-size:14px}.witness-side .slot-tag{font-size:11px;padding:3px 9px}}
+.witness-side .slot{background:#fffffff0;box-shadow:inset 0 1px 0 #fff,0 2px 0 #c0cba94d;border-color:#d9e1cc}
+.witness-side .slot.booked{background:linear-gradient(135deg,#f4f8e9,#e7efda);border-color:#c6d3b1}
+@media(max-width:760px){.witness-groups{grid-template-columns:1fr;gap:18px}.witness-side{padding:20px 14px 15px;border-radius:20px}.witness-side h3{font-size:21px}.witness-side .slot{font-size:14px}.witness-side .slot-tag{font-size:11px;padding:3px 9px}}
 
 @media(max-width:760px){#details-fields{container-type:inline-size}#details-fields .privacy-line{font-size:clamp(7px,2.9cqi,11px);white-space:nowrap}}
 .circle-card{container-type:inline-size}
-.circle-card>.fine-print{font-size:clamp(8px,3.1cqi,12px);white-space:nowrap}
+.circle-card>.fine-print{font-size:clamp(7px,2.8cqi,12px);white-space:nowrap}
 
 /* Venue link and travel app chooser. */
 .venue-link{display:flex;align-items:flex-start;justify-content:center;gap:8px;padding:0;background:transparent;color:inherit;text-align:inherit;border-radius:8px}
