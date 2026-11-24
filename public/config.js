@@ -1,1 +1,1 @@
-window.WEDDING={"couple":"Our wedding","ceremony":"Arya Samaj wedding","date":"Date to be shared","time":"","temple":"Arya Samaj temple","city":"Location to be shared"};
+window.WEDDING={"couple":"Isha & Praveen","brideName":"Isha Srivastava","brideDob":"1 July 2007","groomName":"Praveen Srivastav","groomDob":"8 July 2003","ceremony":"Arya Samaj wedding","date":"26 November 2026","time":"3:00 PM IST","temple":"Arya Samaj Mandir, Aashiyana, Lucknow","address":"M-127, Sector M, Aashiyana, Lucknow","city":"Lucknow"};
