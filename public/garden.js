@@ -1,6 +1,6 @@
-/* A white water garden. Flowers are cached sprites; motion pauses off-screen. */
+/* Floating flowers and maple leaves on white. Cached sprites; motion pauses off-screen. */
 (() => {
-  const canvas = document.querySelector('#water-garden');
+  const canvas = document.querySelector('#flower-garden');
   const context = canvas?.getContext('2d');
   if (!context) return;
 
@@ -12,11 +12,15 @@
     ['#ffffff', '#f0dce2', '#c9a3b0'],
   ];
   const sprites = palettes.map(makeFlower);
+  const mapleSprites = [
+    ['#f2d893','#d2ae60','#a88b43'],
+    ['#e0e3b9','#b1ba7c','#7d8a4b'],
+    ['#f0dfb7','#d4b67e','#b3945b'],
+  ].map(makeMaple);
   let width = 0;
   let height = 0;
   let flowers = [];
-  let pools = [];
-  let touches = [];
+  let leaves = [];
   let frame = 0;
   let lastPaint = 0;
   let time = 0;
@@ -68,6 +72,29 @@
     return sprite;
   }
 
+  function makeMaple(palette) {
+    const sprite = document.createElement('canvas');
+    sprite.width = sprite.height = 192;
+    const brush = sprite.getContext('2d');
+    brush.translate(96,88);
+    const tint = brush.createLinearGradient(-35,-55,38,55);
+    tint.addColorStop(0,palette[0]); tint.addColorStop(.55,palette[1]); tint.addColorStop(1,palette[2]);
+    brush.fillStyle = tint;
+    brush.shadowColor = '#64714030'; brush.shadowBlur = 7; brush.shadowOffsetY = 5;
+    const points = [[0,-67],[-14,-36],[-28,-47],[-23,-14],[-50,-27],[-44,-7],[-68,-2],[-47,17],[-54,34],[-16,28],[-21,53],[0,42],[22,53],[17,28],[55,34],[48,17],[68,-2],[45,-7],[51,-27],[24,-14],[29,-47],[14,-36]];
+    brush.beginPath();
+    points.forEach(([x,y],index)=>index ? brush.lineTo(x,y) : brush.moveTo(x,y));
+    brush.closePath(); brush.fill();
+    brush.shadowColor = 'transparent';
+    brush.strokeStyle = palette[2]; brush.lineWidth = 3; brush.lineCap = 'round';
+    brush.beginPath(); brush.moveTo(0,34); brush.quadraticCurveTo(1,53,6,69); brush.stroke();
+    brush.strokeStyle = '#fff7da80'; brush.lineWidth = 1.4;
+    for (const [x,y] of [[0,-55],[-39,-14],[40,-15],[-38,25],[39,25]]) {
+      brush.beginPath(); brush.moveTo(0,35); brush.quadraticCurveTo(x*.2,5,x,y); brush.stroke();
+    }
+    return sprite;
+  }
+
   function randomSource(seed) {
     return () => {
       seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
@@ -97,73 +124,37 @@
       sprite: sprites[index % sprites.length],
       depth: .4 + random() * .6,
     }));
-    pools = Array.from({ length: mobile ? 7 : 12 }, () => ({
-      x: random() * width,
-      y: random() * height,
-      phase: random(),
-      size: 90 + random() * 140,
+    leaves = Array.from({ length: mobile ? 9 : 14 }, (_,index) => ({
+      x: random(), y: random(), phase: random()*Math.PI*2,
+      size: (mobile ? 43 : 57)+random()*24,
+      speed: .65+random()*.7, depth: .4+random()*.6,
+      rotation: random()*Math.PI*2,
+      sprite: mapleSprites[index%mapleSprites.length],
     }));
     canvas.dataset.flowers = String(count);
-    touches = [];
+    canvas.dataset.leaves = String(leaves.length);
     paint();
   }
 
   const wrap = (value, limit, margin) => ((value + margin) % (limit + margin * 2) + limit + margin * 2) % (limit + margin * 2) - margin;
 
-  function water() {
-    const rows = width <= 760 ? 12 : 16;
-    for (let row = -1; row < rows + 1; row++) {
-      context.beginPath();
-      const baseline = height * row / rows;
-      for (let x = -30; x <= width + 30; x += 24) {
-        const y = baseline + Math.sin(x * .007 + time * .4 + row * .72) * 23
-          + Math.sin(x * .019 - time * .6 + row) * 6;
-        if (x === -30) context.moveTo(x, y);
-        else context.lineTo(x, y);
-      }
-      context.strokeStyle = row % 3 ? '#98beb42e' : '#99b9a83d';
-      context.lineWidth = row % 3 ? 1 : 1.5;
-      context.stroke();
-    }
-    for (const pool of pools) {
-      const phase = (pool.phase + time * .045) % 1;
-      rings(pool.x + Math.sin(time * .2 + pool.phase * 6) * 18, pool.y, 22 + phase * pool.size, .25 * (1 - phase));
-    }
-    for (const touch of touches) {
-      const age = time - touch.born;
-      rings(touch.x, touch.y, 8 + age * 66, .45 * Math.max(0, 1 - age / 3));
-    }
-    touches = touches.filter(touch => time - touch.born < 3);
-  }
-
-  function rings(x, y, radius, alpha) {
-    context.save();
-    context.strokeStyle = `rgba(114, 157, 143, ${alpha})`;
-    context.lineWidth = 1.2;
-    for (let ring = 0; ring < 3; ring++) {
-      context.beginPath();
-      context.ellipse(x, y, radius + ring * 13, (radius + ring * 13) * .48, -.12, 0, Math.PI * 2);
-      context.stroke();
-      context.globalAlpha *= .65;
-    }
-    context.restore();
-  }
-
   function paint() {
     context.clearRect(0, 0, width, height);
-    water();
+    for (const leaf of leaves) {
+      const x = wrap(leaf.x*width+time*3*leaf.speed+Math.sin(time*.3+leaf.phase)*28+pointer.x*leaf.depth,width,65);
+      const y = wrap(leaf.y*height+time*5*leaf.speed-scroll*.1*leaf.depth+Math.cos(time*.2+leaf.phase)*14,height,65);
+      context.save(); context.translate(x,y);
+      context.rotate(leaf.rotation+Math.sin(time*.35+leaf.phase)*.3+time*.035);
+      context.globalAlpha = .72;
+      context.drawImage(leaf.sprite,-leaf.size/2,-leaf.size/2,leaf.size,leaf.size);
+      context.restore();
+    }
     for (const flower of flowers) {
       const x = wrap(flower.x * width + time * 5 * flower.speed
         + Math.sin(time * .33 + flower.phase) * 24 + pointer.x * flower.depth, width, 65);
       const y = wrap(flower.y * height - time * 3.5 * flower.speed
         + Math.cos(time * .27 + flower.phase) * 17 - scroll * .08 * flower.depth + pointer.y * flower.depth, height, 65);
-      // A small wake makes the blossoms feel afloat rather than airborne.
       context.save();
-      context.strokeStyle = '#98bfae59';
-      context.lineWidth = 1;
-      context.beginPath();
-      context.ellipse(x, y + flower.size * .18, flower.size * .65, flower.size * .23, -.12, 0, Math.PI * 2);
-      context.stroke();
       context.translate(x, y);
       context.rotate(flower.rotation + Math.sin(time * .24 + flower.phase) * .3 + time * .025);
       context.globalAlpha = .88 + flower.depth * .12;
@@ -188,7 +179,6 @@
     frame = 0;
     canvas.dataset.motion = reducedMotion.matches ? 'still' : 'flowing';
     if (reducedMotion.matches || document.hidden) {
-      touches = [];
       paint();
       return;
     }
@@ -204,11 +194,6 @@
   }, { passive: true });
   window.addEventListener('pointerout', event => {
     if (!event.relatedTarget) pointer.targetX = pointer.targetY = 0;
-  }, { passive: true });
-  window.addEventListener('pointerdown', event => {
-    if (reducedMotion.matches) return;
-    if (touches.length >= 8) touches.shift();
-    touches.push({ x: event.clientX, y: event.clientY, born: time });
   }, { passive: true });
   document.addEventListener('visibilitychange', motion);
   reducedMotion.addEventListener('change', motion);

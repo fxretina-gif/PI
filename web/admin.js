@@ -48,7 +48,7 @@ function render() {
       const image = node('img'); image.src=link.href; image.alt=title; image.loading='lazy';
       link.append(image,node('span',null,title)); images.append(link);
     }
-    card.append(images);
+    card.append(images,node('p','portrait-notice','The confirmed witness portrait appears on the wedding page. Aadhaar and PAN images remain private.'));
     }
     const checks = {};
     if(item.status === 'pending') {

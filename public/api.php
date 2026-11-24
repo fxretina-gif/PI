@@ -35,9 +35,23 @@ function body_json(): array {
     catch (Throwable $e) { reject('Invalid request.'); }
     if (!is_array($body)) reject('Invalid request.'); return $body;
 }
-function current_places(PDO $db): array {
-    $slots = array_map('intval', $db->query("SELECT slot FROM witness_requests WHERE status='verified'")->fetchAll(PDO::FETCH_COLUMN));
-    return ['booked'=>count($slots), 'open'=>4-count($slots), 'slots'=>array_map(fn($n)=>['number'=>$n,'booked'=>in_array($n,$slots,true)], [1,2,3,4])];
+function portrait_token(array $item, string $salt): string {
+    return substr(hash_hmac('sha256', $item['id'].'|'.($item['reviewed_at']??''), $salt), 0, 32);
+}
+function current_places(PDO $db, ?string $private=null, ?string $salt=null): array {
+    $booked = [];
+    foreach ($db->query("SELECT id,slot,reviewed_at FROM witness_requests WHERE status='verified'")->fetchAll() as $item) $booked[(int)$item['slot']] = $item;
+    $slots = [];
+    foreach ([1,2,3,4] as $number) {
+        $item = $booked[$number]??null;
+        $photo = null;
+        if ($item && $private!==null && $salt!==null) {
+            $file = photo_path($private, $item['id'], 'portrait');
+            if (is_file($file) && @getimagesize($file)) $photo = '/api/witness-photo/'.$number.'/'.portrait_token($item, $salt);
+        }
+        $slots[] = ['number'=>$number, 'booked'=>$item!==null, 'photoUrl'=>$photo];
+    }
+    return ['booked'=>count($booked), 'open'=>4-count($booked), 'slots'=>$slots];
 }
 function request_id(string $value): bool { return (bool)preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i', $value); }
 function row(PDO $db, string $sql, array $args=[]): array|false { $q=$db->prepare($sql); $q->execute($args); return $q->fetch(PDO::FETCH_ASSOC); }
@@ -45,6 +59,27 @@ function photo_path(string $private, string $id, string $kind): string { return 
 function has_documents(string $private, string $id): bool {
     foreach (PHOTO_KINDS as $kind) if (is_file(photo_path($private, $id, $kind))) return true;
     return false;
+}
+function send_witness_portrait(string $file): never {
+    $info = is_file($file) ? @getimagesize($file) : false;
+    if (!$info || !in_array($info[2], [IMAGETYPE_JPEG,IMAGETYPE_PNG,IMAGETYPE_WEBP], true) || $info[0]*$info[1]>12000000) reject('Photo not found.',404);
+    $image = @imagecreatefromstring(file_get_contents($file));
+    if (!$image) reject('Photo not found.',404);
+    // Publish a small portrait only. Uploaded originals and ID documents stay private.
+    $thumbnail = imagecreatetruecolor(160,200);
+    imagefill($thumbnail,0,0,0xffffff);
+    $scale = min(160/$info[0],200/$info[1]);
+    $width = max(1,(int)round($info[0]*$scale));
+    $height = max(1,(int)round($info[1]*$scale));
+    imagecopyresampled($thumbnail,$image,(int)((160-$width)/2),(int)((200-$height)/2),0,0,$width,$height,$info[0],$info[1]);
+    imagedestroy($image);
+    header('Content-Type: image/jpeg');
+    header('Content-Disposition: inline; filename="witness-portrait.jpg"');
+    header('Cross-Origin-Resource-Policy: same-origin');
+    header('X-Robots-Tag: noindex, nofollow, noarchive');
+    imagejpeg($thumbnail,null,86);
+    imagedestroy($thumbnail);
+    exit;
 }
 
 try {
@@ -57,7 +92,12 @@ try {
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $path = preg_replace('#^/public(?=/)#', '', $path);
     $method = $_SERVER['REQUEST_METHOD'];
-    if ($path === '/api/availability' && $method === 'GET') respond(current_places($db));
+    if ($path === '/api/availability' && $method === 'GET') respond(current_places($db,$private,$config['rate_salt']));
+    if (preg_match('#^/api/witness-photo/([1-4])/([a-f0-9]{32})$#',$path,$m) && $method==='GET') {
+        $item = row($db,"SELECT id,reviewed_at FROM witness_requests WHERE status='verified' AND slot=?",[(int)$m[1]]);
+        if (!$item || !hash_equals(portrait_token($item,$config['rate_salt']),$m[2])) reject('Photo not found.',404);
+        send_witness_portrait(photo_path($private,$item['id'],'portrait'));
+    }
     if ($path === '/api/witnesses' && $method === 'POST') {
         origin_check();
         if ((int)($_SERVER['CONTENT_LENGTH']??0)>13000000) reject('The photos are too large. Please choose smaller photos.',413);

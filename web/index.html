@@ -5,13 +5,13 @@
   <title>Isha &amp; Praveen · The Witness Circle</title>
   <meta name="description" content="Isha and Praveen's Arya Samaj wedding, 26 November 2026 at 3 PM in Aashiyana, Lucknow. Four witnesses: two from the bride's side and two from the groom's side.">
   <meta name="theme-color" content="#ffffff"><meta name="robots" content="noindex,nofollow">
-  <link rel="icon" href="/favicon.svg?v=20261124-supplied-ganesha" type="image/svg+xml"><link rel="preload" href="/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/bootstrap-icons.min.css?v=1.13.2"><link rel="stylesheet" href="/styles.css?v=20261124-supplied-ganesha">
-  <script src="/config.js?v=20261124-supplied-ganesha" defer></script><script src="/garden.js?v=20261124-supplied-ganesha" defer></script><script src="/app.js?v=20261124-supplied-ganesha" defer></script>
+  <link rel="icon" href="/favicon.svg?v=20261124-witness-portraits" type="image/svg+xml"><link rel="preload" href="/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/bootstrap-icons.min.css?v=1.13.2"><link rel="stylesheet" href="/styles.css?v=20261124-witness-portraits">
+  <script src="/config.js?v=20261124-witness-portraits" defer></script><script src="/garden.js?v=20261124-witness-portraits" defer></script><script src="/app.js?v=20261124-witness-portraits" defer></script>
 </head>
 <body>
-  <div class="water-garden" aria-hidden="true"><canvas id="water-garden"></canvas><div class="water-light"></div></div>
+  <div class="flower-garden" aria-hidden="true"><canvas id="flower-garden"></canvas></div>
   <a class="skip" href="#page-title">Skip to wedding details</a>
-  <header class="site-header devotional-header"><a class="ganesha-home" href="/" aria-label="Wedding home"><img class="ganesha-full" src="/ganesha.jpg?v=20261124-supplied-ganesha" width="46" height="56" alt="Lord Ganesha"></a></header>
+  <header class="site-header devotional-header"><a class="ganesha-home" href="/" aria-label="Wedding home"><img class="ganesha-full" src="/ganesha.jpg?v=20261124-witness-portraits" width="46" height="56" alt="Lord Ganesha"></a></header>
   <main class="layout invitation-layout">
     <div class="hero-grid">
     <section class="story" aria-labelledby="page-title">
@@ -27,14 +27,14 @@
     </section>
     <section class="form-panel" id="witness-form" aria-labelledby="form-title">
       <div id="registration">
-        <div class="form-heading"><div><span class="eyebrow small">A SPECIAL ROLE, JUST FOR YOU</span><h2 id="form-title">Be our witness.</h2></div></div>
+        <div class="form-heading"><div><span class="eyebrow small">A SPECIAL ROLE, JUST FOR YOU</span><h2 id="form-title">Be Our Witness.</h2></div></div>
         <p class="form-description" id="form-description">Start with your name, then add your document photos.</p>
         <div class="steps" aria-label="Registration progress"><button class="step current" id="step-name" type="button" aria-current="step"><span>1</span>Name</button><span class="step-connector" aria-hidden="true"></span><button class="step" id="step-documents" type="button" disabled><span>2</span>Photos</button><span class="step-connector" aria-hidden="true"></span><button class="step" id="step-review" type="button" disabled><span>3</span>Review</button></div>
         <form id="registration-form" novalidate>
           <div id="details-fields">
             <div class="field"><label for="full-name">Name <span>*</span></label><input id="full-name" name="fullName" type="text" autocomplete="name" placeholder="Enter your name" required minlength="2" maxlength="80" aria-describedby="name-error"><small class="field-error" id="name-error" aria-live="polite"></small></div>
             <button type="button" id="continue" class="button primary">Continue to documents <span class="button-detail">Step 1 of 3</span></button>
-            <p class="privacy-line">Your details and photos are shared only with the organiser.</p>
+            <p class="privacy-line">Your ID documents stay private; confirmed witness portraits appear here.</p>
           </div>
           <div id="document-fields" hidden>
             <p class="document-for">Photos for <strong id="document-name"></strong></p>
@@ -51,7 +51,7 @@
             <p class="review-description">Check your photo, PAN and both Aadhaar sides. Make sure every image is clear and belongs to you.</p>
             <p class="document-for">Submitting as <strong id="review-name"></strong></p>
             <div id="review-photos" class="review-photos"></div>
-            <label class="consent"><input id="consent" type="checkbox" required><span>I have reviewed all four photos and confirm they are correct and readable. I agree to share my name and these photos privately with the wedding organiser for verification.</span></label>
+            <label class="consent"><input id="consent" type="checkbox" required><span>I have reviewed all four photos and confirm they are correct and readable. I agree to share them with the organiser for verification and to display my passport-size photo on this wedding page if I am confirmed as a witness. My Aadhaar and PAN images stay private.</span></label>
             <div class="submit-error" id="submit-error" role="alert" hidden></div>
             <button type="submit" id="submit" class="button primary" disabled>Submit for verification <span class="button-detail" id="submit-count">Confirm your review</span></button>
             <button type="button" id="edit-documents" class="text-button">Edit photos</button>

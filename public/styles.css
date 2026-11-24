@@ -129,10 +129,10 @@ h1.couple-title{color:#3f4a30}h1
 .admin-badge{color:#7d714e;background:#f5f1e6}.admin-tabs button.active{border-bottom-color:var(--olive)}
 dialog::backdrop{background:#293123a6}
 
-/* Flowing white water, sculpted blossoms and clear glass surfaces. */
-.water-garden{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;contain:strict;background:radial-gradient(ellipse at 12% 25%,#eef5ed55,transparent 45%),radial-gradient(ellipse at 85% 70%,#f9ede94d,transparent 42%),#fff}
-#water-garden{display:block;width:100%;height:100%}
-.water-light{position:absolute;inset:-20%;background:repeating-linear-gradient(113deg,transparent 0 14%,#e2efe53d 17%,#ffffff99 19%,transparent 23% 35%);mix-blend-mode:multiply;opacity:.55;animation:water-light 14s ease-in-out infinite alternate;pointer-events:none}
+/* Floating flowers, maple leaves and clear glass surfaces. */
+.flower-garden{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;contain:strict;background:#fff}
+#flower-garden{display:block;width:100%;height:100%}
+
 .site-header,.layout,.site-footer{position:relative;z-index:1}
 .site-header{background:#ffffff66;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom-color:#c7d0bc80}
 .hero-grid{gap:30px;align-items:center}
@@ -176,7 +176,7 @@ dialog::backdrop{background:#293123a6}
 #document-fields .document-card:nth-child(4),.review-photos figure:nth-child(4){animation-delay:.18s}
 .brand-mark .bi{animation:flower-turn 30s linear infinite}
 @media(hover:hover){.couple-details,.witness-split>span,.slot,.witness-requirements{transition:transform .3s,box-shadow .3s}.couple-details:hover,.witness-split>span:hover,.slot:hover,.witness-requirements:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 #fff,0 3px 0 #becbad66,0 18px 32px #52673c1a}.document-actions button:hover{transform:translateY(-1px);background:#ffffffed}}
-@keyframes water-light{from{transform:translate(-2%,-1%) rotate(-2deg)}to{transform:translate(3%,2%) rotate(2deg)}}
+
 @keyframes glass-arrive{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes content-rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes glass-edge{0%,100%{background-position:0 0}50%{background-position:100% 0}}
@@ -186,10 +186,10 @@ dialog::backdrop{background:#293123a6}
 @keyframes temple-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 @keyframes flower-turn{to{transform:rotate(360deg)}}
 @media(max-width:850px){.hero-grid{gap:23px}.invitation-layout .story{padding:25px 17px 20px}.hero-grid .form-panel{padding:25px 20px}.event-strip{gap:10px}.event-strip strong{font-size:12px}}
-@media(max-width:760px){.layout.invitation-layout{margin-top:20px;padding:0 16px}.invitation-layout .story{padding:23px 14px 22px;border-radius:24px;background:linear-gradient(135deg,#ffffff73,#ffffff26);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px)}.invitation-layout .event-strip{padding-bottom:0}.invitation-layout .couple-details{padding:13px 8px;gap:8px}.couple-details>div+div{padding-left:8px}.invitation-layout .couple-details strong{font-size:17px}.hero-grid .form-panel{margin-top:24px;padding:25px 20px;border-radius:24px;backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px)}.witness-details{margin-top:29px}.slot .person{font-size:26px}.brand-mark{font-size:22px}.site-header{background:#ffffff85}.water-light{opacity:.42}}
+@media(max-width:760px){.layout.invitation-layout{margin-top:20px;padding:0 16px}.invitation-layout .story{padding:23px 14px 22px;border-radius:24px;background:linear-gradient(135deg,#ffffff73,#ffffff26);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px)}.invitation-layout .event-strip{padding-bottom:0}.invitation-layout .couple-details{padding:13px 8px;gap:8px}.couple-details>div+div{padding-left:8px}.invitation-layout .couple-details strong{font-size:17px}.hero-grid .form-panel{margin-top:24px;padding:25px 20px;border-radius:24px;backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px)}.witness-details{margin-top:29px}.slot .person{font-size:26px}.brand-mark{font-size:22px}.site-header{background:#ffffff85}}
 @media(max-width:360px){h1.couple-title{font-size:34px}.invitation-layout .story{padding:22px 11px 20px}.invitation-layout .couple-details strong{font-size:15px}.hero-grid .form-panel{padding:23px 16px}.invitation-layout .event-strip strong{font-size:13px}.invitation-layout .event-strip small{font-size:11px}.site-header{padding-inline:14px}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.invitation-layout .story,.hero-grid .form-panel,.couple-details,.witness-split>span,.slot,.witness-requirements,.document-card,.review-photos figure,.witness-dialog{background:#ffffffeb}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.water-light{transform:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
 /* User-supplied gold Ganesha; white margins cropped by layout, original preserved. */
 .site-header.devotional-header{justify-content:center;min-height:76px;padding:10px 20px}
@@ -215,3 +215,12 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 @keyframes heart-float{0%{opacity:0;transform:translate(-50%,3px) scale(.35) rotate(0)}16%{opacity:.8}60%{opacity:.55}100%{opacity:0;transform:translate(calc(-50% + var(--heart-x)),-65px) scale(.5) rotate(var(--heart-turn))}}
 @media(max-width:760px){.site-header.devotional-header{min-height:68px;padding:10px 16px}.ganesha-home{width:140px;height:48px;gap:16px}.ganesha-home:before,.ganesha-home:after{width:30px}.ganesha-full{width:40px;height:48px}.heart-particles .bi{font-size:8px}.couple-heart{flex-basis:.74em;width:.74em}}
 @media(prefers-reduced-motion:reduce){.heart-particles{display:none}.heart-beat{animation:none;transform:none}}
+
+/* Witness availability tags and confirmed portrait cards. */
+.slot{min-height:139px;padding:12px 6px;gap:7px}
+.slot-picture{display:grid;place-items:center;width:56px;height:70px;flex-shrink:0}
+.witness-avatar{display:block;width:56px;height:70px;object-fit:contain;border-radius:9px;border:1px solid #ffffffed;background:#fff;box-shadow:0 2px 7px #48583324}
+.slot .slot-tag{display:inline-flex;align-items:center;justify-content:center;max-width:100%;padding:3px 9px;border:1px solid #c4d0ad;border-radius:20px;background:#f3f6ea;color:#66733c;font-size:11px;line-height:1.4;white-space:nowrap;font-weight:500}
+.slot .slot-tag.confirmed{color:#4b612c;background:#e8f0d8;border-color:#bdcda3}
+@media(max-width:760px){.hero-grid #form-description{font-size:clamp(10px,2.85vw,12px);max-width:none;white-space:nowrap;letter-spacing:-.12px;line-height:1.5}.slot{min-height:128px;padding:10px 4px;gap:6px}.slot-picture{width:48px;height:60px}.witness-avatar{width:48px;height:60px}.slot .slot-tag{font-size:10px;padding:3px 6px}}
+@media(max-width:360px){.hero-grid #form-description{font-size:10px;letter-spacing:-.2px}.slot .slot-tag{font-size:9px;padding:3px 5px}.slot-picture,.witness-avatar{width:44px;height:55px}.slot{min-height:122px}}

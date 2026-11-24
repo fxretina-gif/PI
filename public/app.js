@@ -1,4 +1,4 @@
-/* Name, document photos and final review. Document photos stay private. */
+/* Name, document review and confirmed witness portraits. ID documents stay private. */
 const $ = selector => document.querySelector(selector);
 let sending = false;
 let availablePlaces = null;
@@ -191,7 +191,26 @@ async function refreshAvailability() {
       const element = document.createElement('div');
       element.className = `slot${slot.booked ? ' booked' : ''}`;
       element.setAttribute('aria-label', `Witness ${slot.number}: ${slot.booked ? 'booked' : 'open'}`);
-      element.innerHTML = `<i class="bi ${slot.booked ? 'bi-person-check' : 'bi-person'} person" aria-hidden="true"></i><span>Witness ${slot.number}</span><small>${slot.booked ? 'Booked' : 'Open place'}</small>`;
+      const picture = document.createElement('div');
+      picture.className = 'slot-picture';
+      const icon = document.createElement('i');
+      icon.className = `bi ${slot.booked ? 'bi-person-check' : 'bi-person'} person`;
+      icon.setAttribute('aria-hidden','true');
+      if (slot.booked && /^\/api\/witness-photo\/[1-4]\/[a-f0-9]{32}$/.test(slot.photoUrl || '')) {
+        const photo = document.createElement('img');
+        photo.className = 'witness-avatar';
+        photo.src = slot.photoUrl;
+        photo.alt = `Confirmed witness ${slot.number}`;
+        photo.width = 56; photo.height = 70;
+        photo.addEventListener('error',()=>photo.replaceWith(icon),{once:true});
+        picture.append(photo);
+      } else picture.append(icon);
+      const label = document.createElement('span');
+      label.textContent = `Witness ${slot.number}`;
+      const tag = document.createElement('small');
+      tag.className = `slot-tag${slot.booked ? ' confirmed' : ''}`;
+      tag.textContent = slot.booked ? 'Thankyou 😊' : 'Open Place';
+      element.append(picture,label,tag);
       return element;
     }));
     $('#full-notice').hidden = result.open !== 0;
