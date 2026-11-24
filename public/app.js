@@ -5,6 +5,7 @@ let availablePlaces = null;
 let submissionId = crypto.randomUUID();
 let submittedName = '';
 const witnessDialog = $('#witness-dialog');
+const locationDialog = $('#location-dialog');
 $('#open-witness').addEventListener('click', () => witnessDialog.showModal());
 $('#close-witness').addEventListener('click', () => witnessDialog.close());
 $('#accept-invitation').addEventListener('click', () => {
@@ -13,16 +14,47 @@ $('#accept-invitation').addEventListener('click', () => {
   showStep(1);
   $('#full-name').focus({ preventScroll: true });
 });
-witnessDialog.addEventListener('click', event => {
-  if (event.target !== witnessDialog) return;
-  const rect = witnessDialog.getBoundingClientRect();
-  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) witnessDialog.close();
-});
+for (const dialog of [witnessDialog, locationDialog]) {
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const rect = dialog.getBoundingClientRect();
+    if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+  });
+}
 
 for (const node of document.querySelectorAll('[data-event]')) {
   const value = window.WEDDING?.[node.dataset.event];
   if (value) node.textContent = value;
 }
+
+const venueName = $('[data-event="temple"]').textContent;
+const venueStreet = $('[data-event="address"]').textContent;
+const venueAddress = `${venueName}, ${venueStreet}`;
+const venueQuery = encodeURIComponent(venueAddress);
+$('#location-temple').textContent = venueName;
+$('#location-street').textContent = venueStreet;
+$('#google-maps').href = `https://www.google.com/maps/dir/?api=1&destination=${venueQuery}`;
+const android = /Android/i.test(navigator.userAgent);
+$('#native-maps').href = android ? `geo:0,0?q=${venueQuery}` : `https://maps.apple.com/?daddr=${venueQuery}`;
+$('#native-maps-label').textContent = android ? 'Other map apps' : 'Apple Maps';
+if (android) $('#native-maps').removeAttribute('target');
+$('#open-location').addEventListener('click', () => {
+  $('#location-status').textContent = '';
+  locationDialog.showModal();
+});
+$('#close-location').addEventListener('click', () => locationDialog.close());
+$('#copy-location').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(venueAddress);
+    $('#location-status').textContent = 'Address copied. Paste it as your ride destination.';
+  } catch {
+    const range = document.createRange();
+    range.selectNodeContents($('#location-address'));
+    const selection = window.getSelection();
+    selection.removeAllRanges(); selection.addRange(range);
+    $('#location-status').textContent = 'Address selected. Copy it and paste it in your app.';
+  }
+});
 
 const kinds = [
   { key: 'portrait', title: 'Your photo', hint: 'Passport-size, face clearly visible', facing: 'user' },
