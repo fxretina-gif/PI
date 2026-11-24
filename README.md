@@ -37,8 +37,11 @@ the invitation popup leads back to the form. Photos are resized before upload,
 validated by the server and stored privately for organiser review. Step 3 shows
 all four previews and requires confirmation before submission. Identical Aadhaar
 front and back images are rejected. Dates of birth are not included in the page
-or public configuration. The theme uses red headings and highlights, olive icons,
-raised cards and dimensional controls.
+or public configuration. The white theme uses olive and charcoal text, muted red accents, self-hosted
+Bootstrap Icons and clear glass cards. The header pairs a UXWing Ganesha icon
+with “श्री गणेशाय नमः” and its English transliteration. A canvas water garden animates 42 floating
+blossoms on desktop and 26 on mobile, with flowing waves and tap ripples. Motion
+pauses when the page is hidden and becomes still for reduced-motion preferences.
 
 Each witness must also bring Aadhaar, PAN and two printed passport-size
 photographs to the ceremony. Four witnesses are needed: two from the bride's
