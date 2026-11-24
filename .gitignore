@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.local/
+.dev.vars*
+.env*
+!.env.example
+.sites-runtime/
+.wrangler/
+outputs/
+.DS_Store

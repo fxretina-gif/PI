@@ -1,0 +1,7 @@
+Options -Indexes
+RewriteEngine On
+RewriteRule ^\.well-known(?:/|$) - [L]
+RewriteRule ^(?:\.|web(?:/|$)|server(?:/|$)|scripts(?:/|$)|tests(?:/|$)|drizzle(?:/|$)|node_modules(?:/|$)|dist(?:/|$)) - [F,L]
+RewriteRule ^(?:README\.md|package(?:-lock)?\.json|wedding\.json|preview\.html)$ - [F,L]
+RewriteRule ^public(?:/|$) - [L]
+RewriteRule ^(.*)$ public/$1 [L]

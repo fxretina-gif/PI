@@ -1,0 +1,1 @@
+window.WEDDING={"couple":"Our wedding","ceremony":"Arya Samaj wedding","date":"Date to be shared","time":"","temple":"Arya Samaj temple","city":"Location to be shared"};
