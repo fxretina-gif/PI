@@ -29,6 +29,10 @@ Built assets are committed so hosting needs no Node build process.
 
 ## Witness flow
 
+A glass dinner invitation for office colleagues appears below Ganesha and before
+the wedding hero: “After the wedding, let’s celebrate together over a special
+dinner.”
+
 The hero shows the wedding details, venue and the first registration step
 together. The venue opens a glass map chooser with Google Maps directions and
 Android's available map apps or Apple Maps. Guests can also copy the venue
