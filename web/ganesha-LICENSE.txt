@@ -1,5 +1,6 @@
-Full seated Ganesh icon, SVG Repo 452507.
-Source: https://www.svgrepo.com/svg/452507/ganesh
-License: CC0 https://creativecommons.org/publicdomain/zero/1.0/
+Classic Ganesha illustration, published by OpenClipart via FreeSVG.
+Source: https://freesvg.org/classic-ganesha
+Preview asset: https://freesvg.org/img/ganesha-1893.png
+License: Public Domain / CC0 https://creativecommons.org/publicdomain/zero/1.0/
 Downloaded 24 November 2026 for this wedding website.
-Changes: olive strokes and a tighter viewBox around the complete seated figure.
+Original image preserved; displayed at a compact size with a muted gold CSS tint.

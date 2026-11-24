@@ -38,7 +38,7 @@ validated by the server and stored privately for organiser review. Step 3 shows
 all four previews and requires confirmation before submission. Identical Aadhaar
 front and back images are rejected. Dates of birth are not included in the page
 or public configuration. The white theme uses olive and charcoal text, muted red accents, self-hosted
-Bootstrap Icons and clear glass cards. The header centres a full seated Ganesha icon from SVG Repo (CC0), without
+Bootstrap Icons and clear glass cards. The header centres a compact traditional Ganesha illustration from FreeSVG/OpenClipart (CC0), without
 visible text. A beating heart between the couple’s names releases small fading
 hearts; the ceremony label has matching dashes on both sides. A canvas water garden animates 42 floating
 blossoms on desktop and 26 on mobile, with flowing waves and tap ripples. Motion

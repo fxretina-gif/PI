@@ -192,9 +192,11 @@ dialog::backdrop{background:#293123a6}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.water-light{transform:none}}
 
 /* A complete seated Ganesha, centred with no visible header text. */
-.site-header.devotional-header{justify-content:center;min-height:124px;padding:12px 20px}
-.ganesha-home{display:grid;place-items:center;width:106px;height:100px;border-radius:50%;background:radial-gradient(ellipse,#f1eed588,transparent 70%)}
-.ganesha-full{display:block;width:94px;height:98px;object-fit:contain;filter:drop-shadow(0 3px 2px #626b3517)}
+.site-header.devotional-header{justify-content:center;min-height:76px;padding:10px 20px}
+.ganesha-home{display:flex;align-items:center;justify-content:center;gap:18px;width:154px;height:56px;background:none}
+.ganesha-home:before,.ganesha-home:after{content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,#b7a67799)}
+.ganesha-home:after{transform:rotate(180deg)}
+.ganesha-full{display:block;width:42px;height:54px;object-fit:contain;filter:brightness(0) saturate(100%) invert(49%) sepia(24%) saturate(685%) hue-rotate(9deg) brightness(95%) contrast(88%)}
 
 /* A double heartbeat with little hearts rising, drifting and disappearing. */
 h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em;white-space:nowrap}
@@ -211,5 +213,5 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .heart-particles .bi:nth-child(6){--heart-x:8px;--heart-turn:13deg;animation-delay:-3s;animation-duration:3.4s;font-size:8px}
 @keyframes heart-beat{0%,36%,100%{transform:scale(1)}10%{transform:scale(1.17)}18%{transform:scale(1.02)}27%{transform:scale(1.13)}}
 @keyframes heart-float{0%{opacity:0;transform:translate(-50%,3px) scale(.35) rotate(0)}16%{opacity:.8}60%{opacity:.55}100%{opacity:0;transform:translate(calc(-50% + var(--heart-x)),-65px) scale(.5) rotate(var(--heart-turn))}}
-@media(max-width:760px){.site-header.devotional-header{min-height:110px;padding:10px 16px}.ganesha-home{width:94px;height:90px}.ganesha-full{width:83px;height:88px}.heart-particles .bi{font-size:8px}.couple-heart{flex-basis:.74em;width:.74em}}
+@media(max-width:760px){.site-header.devotional-header{min-height:68px;padding:10px 16px}.ganesha-home{width:140px;height:48px;gap:16px}.ganesha-home:before,.ganesha-home:after{width:30px}.ganesha-full{width:36px;height:46px}.heart-particles .bi{font-size:8px}.couple-heart{flex-basis:.74em;width:.74em}}
 @media(prefers-reduced-motion:reduce){.heart-particles{display:none}.heart-beat{animation:none;transform:none}}
