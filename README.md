@@ -30,10 +30,9 @@ Built assets are committed so hosting needs no Node build process.
 ## Witness flow
 
 The hero shows the wedding details, venue and the first registration step
-together. The venue opens a glass travel chooser with Google Maps directions,
-Android's available map apps or Apple Maps, plus Uber and Rapido's official app
-links. A copy-address button supports pasting the venue into ride apps; no ride
-is booked by this website and no unverified coordinates are used.
+together. The venue opens a glass map chooser with Google Maps directions and
+Android's available map apps or Apple Maps. Guests can also copy the venue
+address. Map links use the provided venue address.
 
 Step 1 asks only for a name, with no dropdown. Step 2 requires four
 photos: one passport-size witness photo, PAN card, Aadhaar front and Aadhaar back. Each supports

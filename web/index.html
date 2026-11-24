@@ -6,7 +6,7 @@
   <meta name="description" content="Isha and Praveen's Arya Samaj wedding, 26 November 2026 at 3 PM in Aashiyana, Lucknow. Four witnesses: two from the bride's side and two from the groom's side.">
   <meta name="theme-color" content="#ffffff"><meta name="robots" content="noindex,nofollow">
   <link rel="icon" href="/favicon.svg?v=20261125-witness-groups" type="image/svg+xml"><link rel="preload" href="/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/bootstrap-icons.min.css?v=1.13.2"><link rel="stylesheet" href="/styles.css?v=20261125-travel">
-  <script src="/config.js?v=20261125-witness-groups" defer></script><script src="/garden.js?v=20261125-witness-groups" defer></script><script src="/app.js?v=20261125-travel" defer></script>
+  <script src="/config.js?v=20261125-witness-groups" defer></script><script src="/garden.js?v=20261125-witness-groups" defer></script><script src="/app.js?v=20261125-maps-only" defer></script>
 </head>
 <body>
   <div class="flower-garden" aria-hidden="true"><canvas id="flower-garden"></canvas></div>
@@ -23,7 +23,7 @@
         <div><span class="person-role">Groom</span><strong data-event="groomName">Praveen Srivastav</strong></div>
       </div>
       <div class="temple-art" aria-hidden="true"><svg viewBox="0 0 480 200" fill="none"><defs><linearGradient id="sun" x1="240" y1="15" x2="240" y2="185" gradientUnits="userSpaceOnUse"><stop stop-color="#eee5c9"/><stop offset="1" stop-color="#fcfaf2"/></linearGradient></defs><circle cx="240" cy="109" r="87" fill="url(#sun)"/><path d="M55 185H425M85 178H395M105 169H375" stroke="#626b35" stroke-width="2" stroke-linecap="round"/><path d="M140 168V112H340V168M125 111H355L335 94H145L125 111Z" fill="#fff8ee" stroke="#626b35" stroke-width="2"/><path d="M185 94L205 68H275L295 94H185ZM206 68L222 40H258L274 68M223 40L240 18L257 40M240 18V5L261 11L240 17" fill="#fff6e7" stroke="#626b35" stroke-width="2" stroke-linejoin="round"/><path d="M160 116V165M188 116V165M292 116V165M320 116V165M218 167V139C218 110 262 110 262 139V167" stroke="#626b35" stroke-width="3"/><path d="M148 127Q240 151 332 127" stroke="#b3262d" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round"/><path d="M80 166Q67 141 73 116M74 140Q47 133 54 120Q72 116 74 140M74 135Q92 112 101 125Q104 140 74 144M393 166Q408 142 404 117M403 140Q427 128 430 141Q421 152 401 151" stroke="#626b35" stroke-width="2"/><path d="M339 38q8-8 16 0M360 48q7-7 14 0" stroke="#626b35" stroke-width="1.5" stroke-linecap="round"/><circle cx="129" cy="45" r="3" fill="#d9a04d"/><path d="M105 62v8m-4-4h8M372 87v8m-4-4h8" stroke="#d9a04d" stroke-width="1.5"/></svg><span class="art-caption">a sacred fire. a promise. our people.</span></div>
-      <div class="event-strip"><div><span class="event-icon" aria-hidden="true"><i class="bi bi-calendar-heart" aria-hidden="true"></i></span><span><strong data-event="date">26 November 2026</strong><small data-event="time">3:00 PM IST</small></span></div><div><button class="venue-link" id="open-location" type="button" aria-haspopup="dialog" aria-controls="location-dialog"><span class="event-icon" aria-hidden="true"><i class="bi bi-geo-alt" aria-hidden="true"></i></span><span><strong data-event="temple">Arya Samaj Mandir, Aashiyana, Lucknow</strong><small data-event="address">M-127, Sector M, Aashiyana, Lucknow</small><small class="venue-hint">Tap for maps &amp; rides <i class="bi bi-arrow-up-right" aria-hidden="true"></i></small></span></button></div></div>
+      <div class="event-strip"><div><span class="event-icon" aria-hidden="true"><i class="bi bi-calendar-heart" aria-hidden="true"></i></span><span><strong data-event="date">26 November 2026</strong><small data-event="time">3:00 PM IST</small></span></div><div><button class="venue-link" id="open-location" type="button" aria-haspopup="dialog" aria-controls="location-dialog"><span class="event-icon" aria-hidden="true"><i class="bi bi-geo-alt" aria-hidden="true"></i></span><span><strong data-event="temple">Arya Samaj Mandir, Aashiyana, Lucknow</strong><small data-event="address">M-127, Sector M, Aashiyana, Lucknow</small><small class="venue-hint">Tap for maps <i class="bi bi-arrow-up-right" aria-hidden="true"></i></small></span></button></div></div>
     </section>
     <section class="form-panel" id="witness-form" aria-labelledby="form-title">
       <div id="registration">
@@ -91,20 +91,18 @@
     </div>
   </dialog>
   <dialog id="location-dialog" class="location-dialog" aria-labelledby="location-title">
-    <button id="close-location" type="button" class="icon-button popup-close" aria-label="Close travel options"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+    <button id="close-location" type="button" class="icon-button popup-close" aria-label="Close map options"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
     <div class="location-content">
       <div class="popup-mark" aria-hidden="true"><i class="bi bi-geo-alt" aria-hidden="true"></i></div>
       <span class="eyebrow small">WE’LL SEE YOU THERE</span>
       <h2 id="location-title">Find the venue</h2>
       <div id="location-address" class="location-address"><strong id="location-temple">Arya Samaj Mandir, Aashiyana, Lucknow</strong><p id="location-street">M-127, Sector M, Aashiyana, Lucknow</p></div>
-      <h3>Choose your app</h3>
+      <h3>Choose your map app</h3>
       <div class="travel-apps">
         <a class="travel-app" id="google-maps" href="https://www.google.com/maps/dir/?api=1&amp;destination=Arya+Samaj+Mandir%2C+M-127%2C+Sector+M%2C+Aashiyana%2C+Lucknow" target="_blank" rel="noopener noreferrer"><i class="bi bi-map" aria-hidden="true"></i><strong>Google Maps</strong><small>Get directions</small></a>
         <a class="travel-app" id="native-maps" href="https://maps.apple.com/?daddr=Arya+Samaj+Mandir%2C+M-127%2C+Sector+M%2C+Aashiyana%2C+Lucknow" target="_blank" rel="noopener noreferrer"><i class="bi bi-signpost-split" aria-hidden="true"></i><strong id="native-maps-label">Maps app</strong><small>Open the venue</small></a>
-        <a class="travel-app" href="https://m.uber.com/looking" target="_blank" rel="noopener noreferrer"><i class="bi bi-taxi-front" aria-hidden="true"></i><strong>Uber</strong><small>Open ride app</small></a>
-        <a class="travel-app" href="https://m.rapido.cc/Ewte?af_xp=qr&amp;pid=website_footer_download_app&amp;c=ws_footer_download_link&amp;is_retargeting=true&amp;af_reengagement_window=30d&amp;af_dp=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.rapido.passenger" target="_blank" rel="noopener noreferrer"><i class="bi bi-bicycle" aria-hidden="true"></i><strong>Rapido</strong><small>Open ride app</small></a>
       </div>
-      <p class="travel-help">For Uber or Rapido, copy the venue address and paste it as your destination.</p>
+      <p class="travel-help">You can also copy the venue address below.</p>
       <button class="button secondary" id="copy-location" type="button"><i class="bi bi-copy" aria-hidden="true"></i>Copy venue address</button>
       <p id="location-status" class="location-status" role="status"></p>
     </div>

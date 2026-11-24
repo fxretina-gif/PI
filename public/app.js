@@ -46,13 +46,13 @@ $('#close-location').addEventListener('click', () => locationDialog.close());
 $('#copy-location').addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText(venueAddress);
-    $('#location-status').textContent = 'Address copied. Paste it as your ride destination.';
+    $('#location-status').textContent = 'Address copied.';
   } catch {
     const range = document.createRange();
     range.selectNodeContents($('#location-address'));
     const selection = window.getSelection();
     selection.removeAllRanges(); selection.addRange(range);
-    $('#location-status').textContent = 'Address selected. Copy it and paste it in your app.';
+    $('#location-status').textContent = 'Address selected. Copy it to use in your map app.';
   }
 });
 
