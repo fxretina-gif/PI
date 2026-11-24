@@ -268,9 +268,10 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 @media(max-width:360px){.location-content{padding:28px 17px 20px}.location-content h2{font-size:29px}.travel-app{min-height:90px}.travel-app strong{font-size:12px}}
 
 /* A fixed dinner invitation beside Ganesha, with cutlery tapping together. */
-.treat-button{position:fixed;z-index:10;top:max(5px,env(safe-area-inset-top));right:max(20px,env(safe-area-inset-right));width:66px;height:66px;padding:0;border:1px solid #d6bd78;border-radius:50%;background:radial-gradient(circle at 32% 20%,#fffdf1,#f0edcf 68%,#e2dbac);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c7bf8c80,0 5px 18px #656a3426;color:var(--olive);isolation:isolate;transition:background .2s,box-shadow .2s}
+.header-action{position:fixed;z-index:10;top:max(5px,env(safe-area-inset-top));width:66px;height:66px;padding:0;border:1px solid #d6bd78;border-radius:50%;background:radial-gradient(circle at 32% 20%,#fffdf1,#f0edcf 68%,#e2dbac);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c7bf8c80,0 5px 18px #656a3426;color:var(--olive);isolation:isolate;transition:background .2s,box-shadow .2s}
+.treat-button{right:max(20px,env(safe-area-inset-right))}
 .treat-button:before{content:"";position:absolute;inset:-4px;border:1px solid #cdb66e;border-radius:inherit;pointer-events:none;animation:treat-ring 3.4s ease-out infinite}
-.treat-button:hover{background:radial-gradient(circle at 32% 20%,#fffef7,#eae6c2 68%,#dcd29a);box-shadow:inset 0 1px 0 #fff,0 3px 0 #bcb17b80,0 6px 22px #656a3438}
+.header-action:hover{background:radial-gradient(circle at 32% 20%,#fffef7,#eae6c2 68%,#dcd29a);box-shadow:inset 0 1px 0 #fff,0 3px 0 #bcb17b80,0 6px 22px #656a3438}
 .treat-label{position:absolute;inset:0;font-family:Georgia,"Times New Roman",serif;font-size:11px;font-weight:700;line-height:1}
 .treat-label>span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(var(--treat-angle)) translateY(-25px)}
 .treat-label>span:nth-child(1){--treat-angle:-30deg}.treat-label>span:nth-child(2){--treat-angle:-15deg}.treat-label>span:nth-child(3){--treat-angle:0deg}.treat-label>span:nth-child(4){--treat-angle:15deg}.treat-label>span:nth-child(5){--treat-angle:30deg}
@@ -285,8 +286,57 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 @keyframes treat-knife-tap{0%,20%,54%,100%{transform:rotate(10deg)}30%,42%{transform:rotate(-18deg)}36%{transform:rotate(-2deg)}}
 @keyframes treat-clink{0%,25%,35%,39%,48%,100%{opacity:0;transform:scale(.5)}30%,43%{opacity:1;transform:scale(1.1)}}
 @keyframes treat-ring{0%,58%,100%{opacity:0;transform:scale(1)}12%{opacity:.45}45%{opacity:0;transform:scale(1.14)}}
-@media(max-width:760px){.treat-button{width:60px;height:60px;top:max(4px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right))}.treat-label>span{transform:translate(-50%,-50%) rotate(var(--treat-angle)) translateY(-22px)}.treat-cutlery{top:20px;left:13px}.treat-emoji{width:23px;height:23px;font-size:17px}}
+@media(max-width:760px){.header-action{width:60px;height:60px;top:max(4px,env(safe-area-inset-top))}.treat-button{right:max(12px,env(safe-area-inset-right))}.treat-label>span{transform:translate(-50%,-50%) rotate(var(--treat-angle)) translateY(-22px)}.treat-cutlery{top:20px;left:13px}.treat-emoji{width:23px;height:23px;font-size:17px}}
 @media(prefers-reduced-motion:reduce){.treat-button:before,.treat-spark{display:none}}
+
+/* The matching information button opens an organised, scrollable wedding guide. */
+.guide-button{left:max(20px,env(safe-area-inset-left));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.guide-button>.bi{font-size:29px;line-height:1}
+.guide-button>span{font-size:10px;font-weight:600;letter-spacing:.3px;line-height:1.3}
+.guide-dialog{position:fixed;inset:0;width:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:20px;border:0;border-radius:0;background:transparent;box-shadow:none;overflow-y:auto;overflow-x:hidden}
+.guide-dialog[open]{display:grid;place-items:safe center}
+.guide-dialog::backdrop{background:#34482c70;backdrop-filter:blur(5px)}
+.guide-card{position:relative;display:flex;flex-direction:column;width:min(610px,100%);max-height:calc(100dvh - 40px);min-height:0;overflow:hidden;border:1px solid #fff;border-radius:25px;background:linear-gradient(135deg,#fffffff5,#f8faf4f5);box-shadow:inset 0 1px 0 #fff,0 3px 0 #b9c7ab66,0 25px 90px #23321f44;animation:invitation-bloom .4s ease-out both}
+.guide-heading{position:relative;flex-shrink:0;padding:24px 25px 18px;text-align:center;border-bottom:1px solid #e4e7d9;background:linear-gradient(135deg,#fff,#f0f3e8c9)}
+.guide-heading .popup-close{position:absolute;right:10px;top:10px;background:transparent}
+.guide-mark{display:grid;place-items:center;width:43px;height:43px;margin:0 auto 11px;border:1px solid #d9dfca;border-radius:50%;background:#fffefa;box-shadow:0 2px 0 #c6ceb480;color:var(--olive);font-size:23px}
+.guide-heading .eyebrow{justify-content:center;font-size:9px;letter-spacing:1.4px}
+.guide-heading h2{font:400 31px/1.18 Georgia,"Times New Roman",serif;color:var(--ink);margin:7px 0}
+.guide-heading p{font-size:12px;color:var(--muted);line-height:1.5}
+.guide-date{display:inline-block;margin-top:12px;padding:5px 10px;border:1px solid #d9dfca;border-radius:20px;background:#ffffffb3;color:var(--olive);font-size:11px;white-space:nowrap}
+.guide-body{min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#c6cfad transparent;padding:18px 22px 20px}
+.guide-section{border:1px solid #dce2d0;border-radius:14px;background:#ffffffa6;box-shadow:0 2px 0 #d3dac633;overflow:hidden}
+.guide-section+.guide-section{margin-top:10px}
+.guide-section>summary{display:flex;align-items:center;gap:11px;list-style:none;cursor:pointer;padding:15px;color:var(--olive);text-align:left}
+.guide-section>summary::-webkit-details-marker{display:none}
+.guide-section>summary>.bi:first-child{flex-shrink:0;font-size:22px;line-height:1}
+.guide-section>summary>span{flex:1;font-size:14px;font-weight:600;min-width:0}
+.guide-section>summary small{display:block;margin-top:3px;font-size:11px;font-weight:400;color:var(--muted);line-height:1.4}
+.guide-chevron{font-size:12px;flex-shrink:0;transition:transform .2s}
+.guide-section[open]>summary{background:#f1f4e8a6}
+.guide-section[open] .guide-chevron{transform:rotate(180deg)}
+.guide-section-content{padding:0 15px 15px}
+.guide-sides{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:14px;text-align:center}
+.guide-sides>span{padding:9px 6px;border:1px solid #e0e5d4;border-radius:10px;font-size:11px;color:var(--muted);background:#f8faf4}
+.guide-sides strong{display:block;color:var(--olive);font-size:13px;margin-bottom:2px;font-weight:600}
+.guide-list{list-style:none;padding:0;margin:5px 0 0;text-align:left}
+.guide-list>li{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:46px;padding:12px 0;font-size:13px;line-height:1.4;border-bottom:1px solid #e9ecdf}
+.guide-list>li:last-child{border-bottom:0}
+.guide-list>li>span:first-child{min-width:0}
+.guide-list small{display:block;font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5}
+.guide-pill{flex-shrink:0;font-size:10px;color:var(--olive);background:#f0f3e7;border:1px solid #dce2cb;border-radius:20px;padding:4px 7px;white-space:nowrap}
+.guide-note{font-size:11px;line-height:1.65;color:var(--muted);padding:11px 12px;border-radius:10px;background:#f5f6ee;margin-top:9px;text-align:left}
+.guide-note strong{font-weight:600;color:var(--olive)}
+.guide-process{counter-reset:guide-step;list-style:none;padding:4px 0 0;margin:0;text-align:left}
+.guide-process>li{counter-increment:guide-step;position:relative;padding:13px 0 3px 30px;font-size:13px;line-height:1.5}
+.guide-process>li:before{content:counter(guide-step);position:absolute;left:0;top:13px;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:var(--olive-light);color:var(--olive);font-size:11px}
+.guide-process strong{font-weight:600;color:var(--olive)}
+.guide-process p{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.6}
+.guide-sources{display:flex;flex-wrap:wrap;gap:4px 15px;margin-top:11px}
+.guide-sources a{display:inline-flex;align-items:center;gap:4px;min-height:36px;font-size:10px;text-decoration:underline;text-underline-offset:3px}
+.guide-sources .bi{font-size:9px}
+.guide-footnote{margin:15px 3px 0;text-align:center;font-size:10px;color:var(--muted);line-height:1.6}
+@media(max-width:760px){.guide-button{left:max(12px,env(safe-area-inset-left))}.guide-button>.bi{font-size:26px}.guide-button>span{font-size:9px}.guide-dialog{padding:14px}.guide-card{max-height:calc(100dvh - 28px);border-radius:22px}.guide-heading{padding:20px 19px 16px}.guide-heading h2{font-size:29px}.guide-body{padding:14px 14px 17px}.guide-section>summary{padding:13px;gap:9px}.guide-section-content{padding:0 13px 13px}.guide-section>summary>span{font-size:13px}.guide-list>li{font-size:12px;gap:7px}.guide-list small{font-size:10px}.guide-pill{font-size:9px;padding:4px 6px}}
 .dinner-description{font-size:14px;line-height:1.6;color:var(--muted);margin:0 auto;max-width:340px}
 .dinner-audience{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:14px;color:var(--olive);margin:13px 0 22px}
 .dinner-location{display:grid;justify-items:center;gap:7px;padding:17px 14px;width:100%;border:1px solid #d6dec9;border-radius:14px;background:linear-gradient(135deg,#fff,#f1f5e9);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c9d1b77a;color:var(--olive);text-align:center}
@@ -309,11 +359,13 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .scroll-paper-wrap{min-height:0;overflow:hidden}
 .scroll-paper{position:relative;margin:0 15px;padding:37px 31px 30px;border-inline:1px solid #bba572;border-radius:1% 2% 1.5% 1% / 18% 12% 15% 13%;background:radial-gradient(ellipse at 12% 18%,#ffffff4d,transparent 48%),radial-gradient(ellipse at 90% 78%,#b4a26924,transparent 42%),repeating-linear-gradient(0deg,#8b793803 0 1px,transparent 1px 4px),linear-gradient(100deg,#dbd8b6,#f4efd8 12%,#f5efd9 50%,#eee7c9 87%,#d4d0aa);box-shadow:inset 8px 0 17px #96845526,inset -8px 0 17px #96845526}
 .scroll-paper:before{content:"";position:absolute;inset:13px;border:1px solid #b2a16b80;box-shadow:inset 0 0 0 3px #f8f2dc80;pointer-events:none}
-.scroll-message{position:relative;z-index:1;padding:0;background:none}
+.scroll-message{position:relative;z-index:1;padding:0;background:none;mix-blend-mode:multiply}
 .scroll-message .popup-mark{border-color:#e0d19e;background:radial-gradient(circle at 30% 20%,#fff9e7,#ded8ad);box-shadow:inset 0 1px 0 #fff9e7,0 2px 0 #b4a66d66;color:#697037}
 .scroll-message .eyebrow{color:#84723e;letter-spacing:1.8px}
 .scroll-message h2{font-size:40px;color:#4f592e;letter-spacing:-1px;margin:13px 0 18px}
 .scroll-message .dinner-description{color:#676547;font-size:14px}
+.dinner-brand{position:relative;width:150px;height:104px;overflow:hidden;margin:-9px auto 12px;mix-blend-mode:multiply}
+.dinner-brand img{position:absolute;left:0;top:-21px;display:block;width:150px;height:150px;object-fit:contain}
 .scroll-message .dinner-audience{color:#727744;font-size:15px;margin:15px 0 22px}
 .dinner-dialog .dinner-location{border-color:#b9ad79;background:linear-gradient(135deg,#faf5dfb3,#e1dfb8a6);box-shadow:inset 0 1px 0 #fff9e3,0 2px 0 #a9a06a4d;color:#626c34}
 .dinner-dialog .dinner-location>span{color:#77765b}
@@ -331,5 +383,5 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 @keyframes royal-arrive{from{opacity:0;transform:translateY(14px) scale(.94)}to{opacity:1;transform:none}}
 @keyframes parchment-unroll{from{max-height:0}to{max-height:650px}}
 @keyframes letter-ink{from{opacity:0}to{opacity:1}}
-@media(max-width:760px){.dinner-dialog{padding:24px 16px}.scroll-paper{margin-inline:12px;padding:34px 23px 25px}.scroll-message h2{font-size:35px}.scroll-message .dinner-description{font-size:13px}.scroll-message .dinner-audience{font-size:14px}.scroll-rod{height:22px}.scroll-rod:before,.scroll-rod:after{height:31px;top:-5px;width:13px}.scroll-rod:before{left:8px}.scroll-rod:after{right:8px}.scroll-tassels{right:0;width:29px}}
+@media(max-width:760px){.dinner-dialog{padding:24px 16px}.scroll-paper{margin-inline:12px;padding:34px 23px 25px}.scroll-message h2{font-size:35px}.scroll-message .dinner-description{font-size:13px}.scroll-message .dinner-audience{font-size:14px}.dinner-brand{width:136px;height:95px}.dinner-brand img{width:136px;height:136px;top:-19px}.scroll-rod{height:22px}.scroll-rod:before,.scroll-rod:after{height:31px;top:-5px;width:13px}.scroll-rod:before{left:8px}.scroll-rod:after{right:8px}.scroll-tassels{right:0;width:29px}}
 @media(max-width:360px){.scroll-paper{padding-inline:19px}.scroll-message h2{font-size:30px}.scroll-message .dinner-location{padding:14px 10px}.scroll-message .dinner-location strong{font-size:14px}.scroll-message .dinner-location>span{font-size:11px}}

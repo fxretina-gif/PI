@@ -29,6 +29,15 @@ Built assets are committed so hosting needs no Node build process.
 
 ## Witness flow
 
+A matching fixed information button sits at the top left of Ganesha. It opens
+a centered glass guide with a scrollable body and an always-visible close button.
+Four expandable sections cover witnesses (open first), the couple's documents,
+ceremony items and quantities, and the ceremony/registration process. The guide
+uses the organiser's checklist, with links to the mandir's ceremony guidance,
+the Hindu Marriage Act and the UP government registration portal. Witnesses need
+photocopies of Aadhaar and PAN and two printed passport-size photos each;
+driving licence/voter ID is listed as backup. The couple needs six photos each.
+
 A round olive-and-gold “Treat” button with a 😋 emoji sits at the top right,
 beside the centered Ganesha. It stays fixed in the same place while scrolling.
 Two halves of the Bootstrap cutlery icon tap together with a small glint and
@@ -38,7 +47,8 @@ Its underlined restaurant location opens the same map chooser and copy-address
 action as the wedding venue. Closing the map chooser returns to the dinner
 invitation.
 The dinner invitation unrolls as a parchment scroll with gold rollers and tassels,
-styled from the user's reference. A brief canvas maple-leaf burst runs on opening,
+styled from the user's reference. The supplied Madhurima logo appears inside the
+scroll; the outside Treat button keeps its animated cutlery. A brief canvas maple-leaf burst runs on opening,
 cleans up on close and is skipped for reduced motion. Restaurant map controls remain
 available inside the scroll.
 The dinner venue is Madhurima Sweets & Restaurant, Vibhuti Khand Road, Gomti

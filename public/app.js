@@ -7,6 +7,12 @@ let submittedName = '';
 const witnessDialog = $('#witness-dialog');
 const locationDialog = $('#location-dialog');
 const dinnerDialog = $('#dinner-dialog');
+const guideDialog = $('#guide-dialog');
+$('#open-guide').addEventListener('click', () => {
+  guideDialog.showModal();
+  $('.guide-body').scrollTop = 0;
+});
+$('#close-guide').addEventListener('click', () => guideDialog.close());
 $('#open-dinner').addEventListener('click', () => dinnerDialog.showModal());
 $('#close-dinner').addEventListener('click', () => dinnerDialog.close());
 $('#open-witness').addEventListener('click', () => witnessDialog.showModal());
@@ -17,10 +23,10 @@ $('#accept-invitation').addEventListener('click', () => {
   showStep(1);
   $('#full-name').focus({ preventScroll: true });
 });
-for (const dialog of [witnessDialog, locationDialog, dinnerDialog]) {
+for (const dialog of [witnessDialog, locationDialog, dinnerDialog, guideDialog]) {
   dialog.addEventListener('click', event => {
     if (event.target !== dialog) return;
-    if (dialog === dinnerDialog) { dialog.close(); return; }
+    if (dialog === dinnerDialog || dialog === guideDialog) { dialog.close(); return; }
     const rect = dialog.getBoundingClientRect();
     if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
   });
