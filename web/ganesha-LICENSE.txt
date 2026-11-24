@@ -1,7 +1,5 @@
-Ganesha icon by UXWing
-Source: https://uxwing.com/ganesha-icon/
-License: https://uxwing.com/license/
+Full seated Ganesh icon, SVG Repo 452507.
+Source: https://www.svgrepo.com/svg/452507/ganesh
+License: CC0 https://creativecommons.org/publicdomain/zero/1.0/
 Downloaded 24 November 2026 for this wedding website.
-UXWing permits personal, commercial and client website use and modifications.
-Attribution is optional. The source license applies; this file grants no extra rights.
-Modification: added olive green fill for the site palette.
+Changes: olive strokes and a tighter viewBox around the complete seated figure.
