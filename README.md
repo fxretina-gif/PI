@@ -71,3 +71,12 @@ deployments because it is outside the checkout. There are no package dependencie
 Camera capture needs HTTPS and browser permission. Check the intended physical
 phones before sharing. If HEIC decoding is unsupported, use JPG/PNG/WebP or take
 a new photo. No camera stream is uploaded; only captured stills are submitted.
+
+## Verification
+
+`node tests/live.mjs .local/organiser-access.json` runs the live API smoke checks
+on a fresh empty site. It creates labelled synthetic submissions, tests document
+privacy and concurrent approvals, and deletes all its records/photos. Do not run
+it after real witnesses have started registering. The initial deployment was also
+checked in a 390px mobile browser through photo upload, simulated camera capture,
+submission, organiser login, approval and the shared booking counter.
