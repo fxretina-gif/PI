@@ -251,6 +251,7 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .venue-link:hover strong{text-decoration-color:var(--olive)}
 .event-strip .venue-link .venue-hint{font-size:10px;color:var(--olive);margin-top:6px}
 .venue-hint .bi{font-size:9px;margin-left:2px}
+@media(min-width:761px){.invitation-layout .event-strip{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 20px}.invitation-layout .event-strip>div{flex:0 0 auto;max-width:100%}.event-strip .venue-link strong,.event-strip .venue-link small{white-space:nowrap}}
 .location-dialog{padding:0;width:calc(100% - 28px);max-width:460px;max-height:calc(100dvh - 28px);overflow:auto;border:1px solid #fff;background:#ffffffed;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px 0 #fff,0 2px 0 #b9c7ab66,0 25px 90px #23321f44}
 .location-dialog::backdrop{background:#34482c54;backdrop-filter:blur(4px)}
 .location-dialog .popup-close{position:absolute;right:10px;top:10px;z-index:2;background:transparent}
