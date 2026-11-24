@@ -30,11 +30,15 @@ function render() {
     const card = node('article','admin-card');
     const header = node('div','admin-card-head'); const details = node('div');
     details.append(node('h2',null,item.full_name));
-    const phone = node('a',null,`+91 ${item.phone}`); phone.href = `tel:+91${item.phone}`;
-    const info = node('p'); info.append(phone,document.createTextNode(item.relationship ? ` · ${item.relationship}` : ''));
-    details.append(info,node('p',null,`Received ${new Date(item.created_at).toLocaleString('en-IN', { dateStyle:'medium',timeStyle:'short' })}`));
+    if (item.phone) {
+      const phone = node('a',null,`+91 ${item.phone}`); phone.href = `tel:+91${item.phone}`;
+      const info = node('p'); info.append(phone,document.createTextNode(item.relationship ? ` · ${item.relationship}` : ''));
+      details.append(info);
+    }
+    details.append(node('p',null,`Received ${new Date(item.created_at).toLocaleString('en-IN', { dateStyle:'medium',timeStyle:'short' })}`));
     header.append(details,node('span',`admin-badge ${item.status}`,item.status === 'verified' ? `Witness ${item.slot} · Booked` : item.status === 'pending' ? 'Needs review' : 'Declined'));
     card.append(header);
+    if (item.has_documents) {
     const images = node('div','admin-images');
     for(const [kind,title] of [['portrait','Passport photo'],['aadhaar_front','Aadhaar front'],['aadhaar_back','Aadhaar back']]) {
       const link = node('a'); link.href = `/api/admin/document/${item.id}/${kind}`; link.target='_blank'; link.rel='noopener';
@@ -42,10 +46,14 @@ function render() {
       link.append(image,node('span',null,title)); images.append(link);
     }
     card.append(images);
+    }
     const checks = {};
     if(item.status === 'pending') {
       const checklist = node('div','review-checks');
-      for(const [key,label] of [['photosChecked','All three photos are clear'],['identityChecked','Name and Aadhaar photos checked'],['attendanceChecked','Witness attendance confirmed']]) {
+      const requiredChecks = item.has_documents
+        ? [['photosChecked','All three photos are clear'],['identityChecked','Name and Aadhaar photos checked'],['attendanceChecked','Witness attendance confirmed']]
+        : [['identityChecked','Name confirmed'],['attendanceChecked','Attendance and witness side confirmed (2 per side)']];
+      for(const [key,label] of requiredChecks) {
         const input=node('input');input.type='checkbox';input.id=`${item.id}-${key}`; checks[key]=input;
         const wrapper=node('label');wrapper.append(input,document.createTextNode(label));checklist.append(wrapper);
       }
@@ -64,7 +72,7 @@ function render() {
       actions.append(reject);
     }
     const remove = node('button','text-button','Delete submission');remove.type='button';
-    remove.addEventListener('click',()=> { if(confirm('Permanently delete this submission and all three uploaded photos?')) review(item,'delete'); });
+    remove.addEventListener('click',()=> { if(confirm(item.has_documents ? 'Permanently delete this submission and its uploaded photos?' : 'Permanently delete this submission?')) review(item,'delete'); });
     actions.append(remove);card.append(actions);list.append(card);
   }
 }

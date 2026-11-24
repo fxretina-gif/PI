@@ -41,6 +41,10 @@ function current_places(PDO $db): array {
 function request_id(string $value): bool { return (bool)preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i', $value); }
 function row(PDO $db, string $sql, array $args=[]): array|false { $q=$db->prepare($sql); $q->execute($args); return $q->fetch(PDO::FETCH_ASSOC); }
 function photo_path(string $private, string $id, string $kind): string { return $private . '/photos/' . $id . '_' . $kind; }
+function has_documents(string $private, string $id): bool {
+    foreach (PHOTO_KINDS as $kind) if (is_file(photo_path($private, $id, $kind))) return true;
+    return false;
+}
 
 try {
     $configPath = getenv('WITNESS_CONFIG') ?: dirname(__DIR__, 2) . '/witness-private/config.php';
@@ -55,49 +59,26 @@ try {
     if ($path === '/api/availability' && $method === 'GET') respond(current_places($db));
     if ($path === '/api/witnesses' && $method === 'POST') {
         origin_check();
-        if ((int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 10000000) reject('The photos are too large. Please choose smaller photos.',413);
-        if (!empty($_POST['website'])) reject('Could not accept this submission.');
-        $id=(string)($_POST['submissionId']??''); $name=trim((string)($_POST['fullName']??''));
-        $phone=preg_replace('/\D/','',(string)($_POST['phone']??''));
-        if (strlen($phone)===12 && str_starts_with($phone,'91')) $phone=substr($phone,2);
-        $relationship=(string)($_POST['relationship']??'');
+        $data=body_json();
+        if (!is_string($data['submissionId']??null) || !is_string($data['fullName']??null)) reject('Please enter your name.');
+        $id=$data['submissionId']; $name=trim($data['fullName']);
         if (!request_id($id)) reject('Please refresh the form and try again.');
-        if (strlen($name)<2 || strlen($name)>240 || preg_match('/[\x00-\x1f]/',$name)) reject('Enter your full name.');
-        if (!preg_match('/^[6-9]\d{9}$/',$phone)) reject('Enter a valid 10-digit Indian mobile number.');
-        if (!in_array($relationship,['','Family','Friend','Colleague','Other'],true)) reject('Choose your connection from the list.');
-        if (($_POST['consent']??'')!=='yes') reject('Please agree to share your details with the organiser.');
-        $old=row($db,'SELECT id,phone FROM witness_requests WHERE id=?',[$id]);
-        if ($old) { if ($old['phone']!==$phone) reject('Please refresh the form.',409); respond(['success'=>true,'reference'=>strtoupper(substr($id,0,8))]); }
-        $files=[];
-        foreach (PHOTO_KINDS as $kind) {
-            $f=$_FILES[$kind]??null;
-            if (!$f || $f['error']!==UPLOAD_ERR_OK || !is_uploaded_file($f['tmp_name'])) reject('All three photos are required, including both Aadhaar sides.');
-            if ($f['size']>3000000 || !$f['size']) reject('Each photo must be under 3 MB.',413);
-            $info=@getimagesize($f['tmp_name']);
-            if (!$info || !in_array($info[2],[IMAGETYPE_JPEG,IMAGETYPE_PNG,IMAGETYPE_WEBP],true)) reject('Use a valid JPG, PNG or WebP photo.');
-            if (min($info[0],$info[1])<160 || max($info[0],$info[1])>8000) reject('Please use a clear photo between 160 and 8000 pixels.');
-            $files[$kind]=['tmp'=>$f['tmp_name'],'hash'=>hash_file('sha256',$f['tmp_name'])];
-        }
-        if ($files['aadhaar_front']['hash']===$files['aadhaar_back']['hash']) reject('Use different photos for the Aadhaar front and back.');
+        if (preg_match('/[\x00-\x1f\x7f]/',$name) || !preg_match('/^.{2,80}$/us',$name)) reject('Please enter your name (2–80 characters).');
+        $name=preg_replace('/\s+/u',' ',$name);
         $db->exec('BEGIN IMMEDIATE');
         try {
-            $old=row($db,'SELECT id,phone FROM witness_requests WHERE id=?',[$id]);
-            if ($old) { $db->exec('ROLLBACK'); if($old['phone']!==$phone) reject('Please refresh the form.',409);respond(['success'=>true,'reference'=>strtoupper(substr($id,0,8))]); }
-            if (row($db,'SELECT id FROM witness_requests WHERE active_phone=?',[$phone])) { $db->exec('ROLLBACK'); reject('A submission for this mobile number is already with the organiser.',409); }
+            $old=row($db,'SELECT id,full_name FROM witness_requests WHERE id=?',[$id]);
+            if ($old) { $db->exec('ROLLBACK'); if($old['full_name']!==$name) reject('Please refresh the form.',409);respond(['success'=>true,'reference'=>strtoupper(substr($id,0,8))]); }
+            if (row($db,"SELECT id FROM witness_requests WHERE full_name=? COLLATE NOCASE AND status IN ('pending','verified')",[$name])) { $db->exec('ROLLBACK'); reject('Your name is already with the organiser.',409); }
             if (current_places($db)['open']===0) { $db->exec('ROLLBACK'); reject('All four witness places are booked.',409); }
             if ((int)$db->query("SELECT COUNT(*) FROM witness_requests WHERE status='pending'")->fetchColumn()>=12) { $db->exec('ROLLBACK'); reject('Registration is temporarily full. Please contact the organiser.',409); }
             $now=gmdate('c');
             $q=$db->prepare('INSERT INTO witness_requests (id,full_name,phone,active_phone,relationship,consent_at,created_at) VALUES (?,?,?,?,?,?,?)');
-            $q->execute([$id,$name,$phone,$phone,$relationship,$now,$now]);
-            foreach ($files as $kind=>$file) {
-                $destination=photo_path($private,$id,$kind);
-                if (!move_uploaded_file($file['tmp'],$destination)) throw new RuntimeException('Storage failed');
-                chmod($destination,0600);
-            }
+            // Keep the existing schema and any earlier submissions intact.
+            $q->execute([$id,$name,'',null,'',$now,$now]);
             $db->exec('COMMIT');
         } catch (Throwable $e) {
             try {$db->exec('ROLLBACK');} catch(Throwable $ignored) {}
-            foreach (PHOTO_KINDS as $kind) @unlink(photo_path($private,$id,$kind));
             throw $e;
         }
         respond(['success'=>true,'reference'=>strtoupper(substr($id,0,8))],201);
@@ -120,7 +101,12 @@ try {
         }
         if (!authenticated()) reject('Organiser sign-in required.',403);
         if ($path==='/api/admin/logout' && $method==='POST') {csrf_check();$_SESSION=[];session_destroy();respond(['success'=>true]);}
-        if ($path==='/api/admin/requests' && $method==='GET') respond(['requests'=>$db->query('SELECT id,full_name,phone,relationship,status,slot,created_at,reviewed_at FROM witness_requests ORDER BY created_at DESC')->fetchAll(),'availability'=>current_places($db)]);
+        if ($path==='/api/admin/requests' && $method==='GET') {
+            $requests=$db->query('SELECT id,full_name,phone,relationship,status,slot,created_at,reviewed_at FROM witness_requests ORDER BY created_at DESC')->fetchAll();
+            foreach ($requests as &$request) $request['has_documents']=has_documents($private,$request['id']);
+            unset($request);
+            respond(['requests'=>$requests,'availability'=>current_places($db)]);
+        }
         if (preg_match('#^/api/admin/document/([^/]+)/([^/]+)$#',$path,$m) && $method==='GET') {
             if (!request_id($m[1]) || !in_array($m[2],PHOTO_KINDS,true) || !row($db,'SELECT id FROM witness_requests WHERE id=?',[$m[1]])) reject('Photo not found.',404);
             $file=photo_path($private,$m[1],$m[2]);if(!is_file($file))reject('Photo not found.',404);
@@ -134,7 +120,8 @@ try {
                 $item=row($db,'SELECT * FROM witness_requests WHERE id=?',[$id]);
                 if (!$item) {$db->exec('ROLLBACK');reject('Submission not found.',404);}
                 if ($action==='verify') {
-                    if (($data['photosChecked']??false)!==true || ($data['identityChecked']??false)!==true || ($data['attendanceChecked']??false)!==true) {$db->exec('ROLLBACK');reject('Complete all three review checks.');}
+                    $photosRequired=has_documents($private,$id);
+                    if (($data['identityChecked']??false)!==true || ($data['attendanceChecked']??false)!==true || ($photosRequired && ($data['photosChecked']??false)!==true)) {$db->exec('ROLLBACK');reject('Complete the organiser review checks.');}
                     $places=current_places($db);$open=array_values(array_filter($places['slots'],fn($slot)=>!$slot['booked']));
                     if (!$open || $item['status']!=='pending') {$db->exec('ROLLBACK');reject('No open place is available, or this submission is already reviewed.',409);}
                     $q=$db->prepare("UPDATE witness_requests SET status='verified',slot=?,reviewed_at=? WHERE id=?");$q->execute([$open[0]['number'],gmdate('c'),$id]);
