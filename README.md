@@ -31,9 +31,13 @@ Built assets are committed so hosting needs no Node build process.
 
 A slim, single-line dinner announcement sits flush between the header and wedding
 hero: “After the wedding, let’s celebrate together over a special dinner.” The
-strip and blinking eye open a dinner invitation. Its restaurant location opens
-the same map chooser and copy-address action as the wedding venue. Closing the
-map chooser returns to the dinner invitation. Reduced motion disables the blink.
+strip and blinking eye open a dinner invitation.
+The olive-and-gold strip uses larger cream text and a gold eye button. On phones,
+the single-line sentence scrolls slowly; reduced motion allows manual scrolling.
+There is no gap above or below the strip.
+Its underlined restaurant location opens the same map chooser and copy-address
+action as the wedding venue. Closing the map chooser returns to the dinner
+invitation. Reduced motion disables the blink.
 The dinner invitation unrolls as a parchment scroll with gold rollers and tassels,
 styled from the user's reference. A brief canvas maple-leaf burst runs on opening,
 cleans up on close and is skipped for reduced motion. Restaurant map controls remain

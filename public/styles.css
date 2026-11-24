@@ -269,19 +269,30 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 
 /* A flush, single-line strip opens the dinner celebration details. */
 .layout.invitation-layout{margin-top:0}
-.dinner-invitation{container-type:inline-size;position:relative;z-index:1;margin:0;border-block:1px solid #dce3cf;background:#f1f4e7e6;text-align:center}
-.dinner-strip{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:40px;padding:7px 12px;background:transparent;color:var(--olive)}
-.dinner-strip:hover{background:#e8eedb99}
-.dinner-strip:focus-visible{outline-offset:-3px}
-.dinner-copy{font-size:clamp(7px,calc(3.25cqi - 1.8px),14px);line-height:1.4;white-space:nowrap}
-.dinner-eye{display:grid;place-items:center;flex-shrink:0;width:22px;height:22px;border:1px solid #c8d2b5;border-radius:50%;background:#ffffffb3;font-size:14px}
+.dinner-invitation{container-type:inline-size;position:relative;z-index:1;margin:0;border-block:1px solid #d6bd78;background:linear-gradient(110deg,#405127,#617238 45%,#4b602d 75%,#405127);background-size:200% 100%;box-shadow:inset 0 1px 0 #ffffff24,inset 0 -1px 0 #25331766;text-align:center;animation:dinner-glow 9s ease-in-out infinite}
+.dinner-strip{display:flex;align-items:center;justify-content:center;gap:15px;width:100%;min-height:52px;padding:9px 18px;background:transparent;color:#fff9e8}
+.dinner-strip:hover{background:#ffffff0d}
+.dinner-strip:focus-visible{outline-color:#f8df98;outline-offset:-4px}
+.dinner-marquee{display:block;min-width:0;max-width:100%;overflow:hidden}
+.dinner-track{display:flex;align-items:center;width:max-content}
+.dinner-copy{display:block;flex-shrink:0;font-size:16px;font-weight:550;line-height:1.4;white-space:nowrap;text-shadow:0 1px 1px #24301f4d}
+.dinner-copy-clone{display:none}
+.dinner-eye{display:grid;place-items:center;flex-shrink:0;width:32px;height:32px;border:1px solid #f6e4ad;border-radius:50%;background:radial-gradient(circle at 30% 20%,#fff1bd,#d8bd73);box-shadow:0 0 0 4px #f9e6a814,0 2px 7px #1e2d2038;color:#455629;font-size:20px;animation:dinner-eye-glow 3.8s ease-in-out infinite}
 .dinner-eye .bi{animation:dinner-blink 3.8s ease-in-out infinite;transform-origin:center}
 @keyframes dinner-blink{0%,84%,94%,100%{transform:scaleY(1)}89%{transform:scaleY(.08)}}
+@keyframes dinner-glow{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+@keyframes dinner-eye-glow{0%,100%{box-shadow:0 0 0 4px #f9e6a814,0 2px 7px #1e2d2038}50%{box-shadow:0 0 0 6px #f9e6a82e,0 0 17px #f8dfa947}}
+@keyframes dinner-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:760px){.dinner-strip{padding-inline:12px;gap:12px}.dinner-marquee{width:100%}.dinner-track{animation:dinner-marquee 18s linear infinite}.dinner-copy{font-size:15px;padding-right:40px}.dinner-copy-clone{display:block}}
+.dinner-strip:hover .dinner-track,.dinner-strip:focus-visible .dinner-track{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.dinner-marquee{overflow-x:auto;scrollbar-width:none}.dinner-copy{padding-right:0}.dinner-copy-clone{display:none}}
 .dinner-description{font-size:14px;line-height:1.6;color:var(--muted);margin:0 auto;max-width:340px}
 .dinner-audience{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:14px;color:var(--olive);margin:13px 0 22px}
 .dinner-location{display:grid;justify-items:center;gap:7px;padding:17px 14px;width:100%;border:1px solid #d6dec9;border-radius:14px;background:linear-gradient(135deg,#fff,#f1f5e9);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c9d1b77a;color:var(--olive);text-align:center}
 .dinner-location>.bi{font-size:25px}.dinner-location strong{font-size:15px;font-weight:600}.dinner-location>span{font-size:12px;line-height:1.5;color:var(--muted)}.dinner-location small{font-size:10px;margin-top:4px}
 .dinner-location:hover{background:#edf3e1}
+.dinner-location strong{text-decoration:underline;text-decoration-color:#a8b58480;text-underline-offset:3px}
+.dinner-location:hover strong{text-decoration-color:var(--olive)}
 
 /* A royal parchment scroll, opened by the dinner strip. */
 .dinner-dialog{position:fixed;inset:0;width:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:24px 18px;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;overflow-y:auto;overflow-x:hidden;place-items:center}
