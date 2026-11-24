@@ -136,6 +136,7 @@ dialog::backdrop{background:#293123a6}
 .site-header,.layout,.site-footer{position:relative;z-index:1}
 .site-header{background:#ffffff66;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom-color:#c7d0bc80}
 .hero-grid{gap:30px;align-items:center}
+@media(min-width:761px){.hero-grid>.story,.hero-grid>.form-panel{align-self:stretch}.hero-grid>.form-panel{display:flex;flex-direction:column;justify-content:center}}
 .invitation-layout .story,.hero-grid .form-panel,.couple-details,.witness-split>span,.slot,.witness-requirements,.document-card,.review-photos figure{border:1px solid #ffffffee;background:linear-gradient(135deg,#ffffff8c,#ffffff33);backdrop-filter:blur(5px) saturate(115%);-webkit-backdrop-filter:blur(5px) saturate(115%);box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 #b6c2a933,0 1px 0 #bcc8ae66,0 14px 34px #495d3d14}
 .invitation-layout .story{padding:27px 22px 20px;border-radius:27px;position:relative;background:linear-gradient(140deg,#ffffff80,#ffffff26);animation:glass-arrive .9s cubic-bezier(.2,.7,.25,1) both}
 .hero-grid .form-panel{background:linear-gradient(135deg,#ffffff8c,#ffffff38);border-radius:27px;box-shadow:inset 0 1px 0 #fff,inset 1px 0 0 #ffffffa6,0 2px 0 #b7c3ab66,0 18px 45px #3c51391c;animation:glass-arrive 1s .12s cubic-bezier(.2,.7,.25,1) both}
