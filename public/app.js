@@ -38,10 +38,10 @@ let facing = 'environment';
 let cameraGeneration = 0;
 let step = 1;
 const icons = {
-  photo: '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="3" width="24" height="26" rx="3"/><circle cx="16" cy="12" r="4"/><path d="M9 25v-3a7 7 0 0 1 14 0v3"/></svg>',
-  card: '<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="6" width="28" height="20" rx="3"/><circle cx="10" cy="14" r="3"/><path d="M5 23v-2a5 5 0 0 1 10 0v2m3-11h8m-8 5h8m-8 5h6"/></svg>',
-  upload: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 13V3m-4 4 4-4 4 4M3 12v5h14v-5"/></svg>',
-  camera: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 5 1-2h6l1 2h4v12H2V5z"/><circle cx="10" cy="10" r="3"/></svg>',
+  photo: '<i class="bi bi-person-bounding-box" aria-hidden="true"></i>',
+  card: '<i class="bi bi-person-vcard" aria-hidden="true"></i>',
+  upload: '<i class="bi bi-cloud-arrow-up" aria-hidden="true"></i>',
+  camera: '<i class="bi bi-camera" aria-hidden="true"></i>',
 };
 for (const kind of kinds) {
   const card = document.createElement('div');
@@ -98,11 +98,11 @@ async function acceptPhoto(kind, file) {
     preview.src = url; preview.alt = `${kind.title} preview`;
     card.querySelector('.document-preview').replaceChildren(preview);
     card.classList.add('ready');
-    card.querySelector('.document-state').textContent = '✓ Ready';
+    card.querySelector('.document-state').textContent = 'Ready';
     card.querySelector('[data-upload] span').textContent = 'Replace';
   } catch (e) {
     error.textContent = e.message;
-    card.querySelector('.document-state').textContent = photos.has(kind.key) ? '✓ Ready' : 'Required';
+    card.querySelector('.document-state').textContent = photos.has(kind.key) ? 'Ready' : 'Required';
   } finally { processing--; updateSubmit(); }
 }
 
@@ -191,7 +191,7 @@ async function refreshAvailability() {
       const element = document.createElement('div');
       element.className = `slot${slot.booked ? ' booked' : ''}`;
       element.setAttribute('aria-label', `Witness ${slot.number}: ${slot.booked ? 'booked' : 'open'}`);
-      element.innerHTML = `<svg class="person" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="10" r="5"/><path d="M6 29v-4a10 10 0 0 1 20 0v4"/>${slot.booked ? '<path d="m21 12 3 3 6-7"/>' : ''}</svg><span>Witness ${slot.number}</span><small>${slot.booked ? '✓ Booked' : 'Open place'}</small>`;
+      element.innerHTML = `<i class="bi ${slot.booked ? 'bi-person-check' : 'bi-person'} person" aria-hidden="true"></i><span>Witness ${slot.number}</span><small>${slot.booked ? 'Booked' : 'Open place'}</small>`;
       return element;
     }));
     $('#full-notice').hidden = result.open !== 0;
