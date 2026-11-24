@@ -285,7 +285,7 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 
 /* A royal parchment scroll, opened by the dinner strip. */
 .dinner-dialog{position:fixed;inset:0;width:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:24px 18px;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;overflow-y:auto;overflow-x:hidden;place-items:center}
-.dinner-dialog[open]{display:grid}
+.dinner-dialog[open]{display:grid;align-items:safe center}
 .dinner-dialog::backdrop{background:#273022b8;backdrop-filter:blur(5px)}
 .royal-scroll{position:relative;z-index:1;width:min(520px,100%);margin:0 auto;filter:drop-shadow(0 20px 28px #151c2040)}
 .scroll-rod{position:relative;z-index:3;height:25px;border:1px solid #80601e;border-radius:10px;background:linear-gradient(180deg,#785819 0%,#b58d35 10%,#f6e1a0 24%,#fff0b4 32%,#ccaa50 43%,#b48a29 68%,#795914 85%,#a67d28 100%);box-shadow:inset 0 1px 1px #fff1b6,0 2px 3px #53421f35}
@@ -321,4 +321,3 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 @keyframes letter-ink{from{opacity:0}to{opacity:1}}
 @media(max-width:760px){.dinner-dialog{padding:24px 16px}.scroll-paper{margin-inline:12px;padding:34px 23px 25px}.scroll-message h2{font-size:35px}.scroll-message .dinner-description{font-size:13px}.scroll-message .dinner-audience{font-size:14px}.scroll-rod{height:22px}.scroll-rod:before,.scroll-rod:after{height:31px;top:-5px;width:13px}.scroll-rod:before{left:8px}.scroll-rod:after{right:8px}.scroll-tassels{right:0;width:29px}}
 @media(max-width:360px){.scroll-paper{padding-inline:19px}.scroll-message h2{font-size:30px}.scroll-message .dinner-location{padding:14px 10px}.scroll-message .dinner-location strong{font-size:14px}.scroll-message .dinner-location>span{font-size:11px}}
-@media(max-height:700px){.dinner-dialog[open]{align-items:start}}
