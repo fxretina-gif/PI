@@ -6,6 +6,9 @@ let submissionId = crypto.randomUUID();
 let submittedName = '';
 const witnessDialog = $('#witness-dialog');
 const locationDialog = $('#location-dialog');
+const dinnerDialog = $('#dinner-dialog');
+$('#open-dinner').addEventListener('click', () => dinnerDialog.showModal());
+$('#close-dinner').addEventListener('click', () => dinnerDialog.close());
 $('#open-witness').addEventListener('click', () => witnessDialog.showModal());
 $('#close-witness').addEventListener('click', () => witnessDialog.close());
 $('#accept-invitation').addEventListener('click', () => {
@@ -14,7 +17,7 @@ $('#accept-invitation').addEventListener('click', () => {
   showStep(1);
   $('#full-name').focus({ preventScroll: true });
 });
-for (const dialog of [witnessDialog, locationDialog]) {
+for (const dialog of [witnessDialog, locationDialog, dinnerDialog]) {
   dialog.addEventListener('click', event => {
     if (event.target !== dialog) return;
     const rect = dialog.getBoundingClientRect();
@@ -29,23 +32,33 @@ for (const node of document.querySelectorAll('[data-event]')) {
 
 const venueName = $('[data-event="temple"]').textContent;
 const venueStreet = $('[data-event="address"]').textContent;
-const venueAddress = `${venueName}, ${venueStreet}`;
-const venueQuery = encodeURIComponent(venueAddress);
-$('#location-temple').textContent = venueName;
-$('#location-street').textContent = venueStreet;
-$('#google-maps').href = `https://www.google.com/maps/dir/?api=1&destination=${venueQuery}`;
 const android = /Android/i.test(navigator.userAgent);
-$('#native-maps').href = android ? `geo:0,0?q=${venueQuery}` : `https://maps.apple.com/?daddr=${venueQuery}`;
 $('#native-maps-label').textContent = android ? 'Other map apps' : 'Apple Maps';
 if (android) $('#native-maps').removeAttribute('target');
-$('#open-location').addEventListener('click', () => {
+let activeAddress = '';
+function openMapOptions(name, address, place = {}) {
+  activeAddress = `${name}, ${address}`;
+  const query = encodeURIComponent(activeAddress);
+  const coordinates = Number.isFinite(place.latitude) && Number.isFinite(place.longitude) ? `${place.latitude},${place.longitude}` : '';
+  const destination = encodeURIComponent(coordinates || activeAddress);
+  $('#location-temple').textContent = name;
+  $('#location-street').textContent = address;
+  $('#google-maps').href = `https://www.google.com/maps/dir/?api=1&destination=${destination}${place.googlePlaceId ? `&destination_place_id=${encodeURIComponent(place.googlePlaceId)}` : ''}`;
+  $('#native-maps').href = android ? `geo:${coordinates || '0,0'}?q=${coordinates ? encodeURIComponent(`${coordinates}(${name})`) : query}` : `https://maps.apple.com/?daddr=${destination}`;
   $('#location-status').textContent = '';
   locationDialog.showModal();
-});
+}
+$('#open-location').addEventListener('click', () => openMapOptions(venueName, venueStreet));
+const dinnerPlace = window.WEDDING?.dinner || {};
+const dinnerName = dinnerPlace.name || $('#dinner-restaurant').textContent;
+const dinnerAddress = dinnerPlace.address || $('#dinner-address').textContent;
+$('#dinner-restaurant').textContent = dinnerName;
+$('#dinner-address').textContent = dinnerAddress;
+$('#open-dinner-location').addEventListener('click', () => openMapOptions(dinnerName, dinnerAddress, dinnerPlace));
 $('#close-location').addEventListener('click', () => locationDialog.close());
 $('#copy-location').addEventListener('click', async () => {
   try {
-    await navigator.clipboard.writeText(venueAddress);
+    await navigator.clipboard.writeText(activeAddress);
     $('#location-status').textContent = 'Address copied.';
   } catch {
     const range = document.createRange();

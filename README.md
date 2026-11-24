@@ -29,8 +29,15 @@ Built assets are committed so hosting needs no Node build process.
 
 ## Witness flow
 
-A slim, single-line dinner announcement appears below Ganesha and before the
-wedding hero: “After the wedding, let’s celebrate together over a special dinner.”
+A slim, single-line dinner announcement sits flush between the header and wedding
+hero: “After the wedding, let’s celebrate together over a special dinner.” The
+strip and blinking eye open a dinner invitation. Its restaurant location opens
+the same map chooser and copy-address action as the wedding venue. Closing the
+map chooser returns to the dinner invitation. Reduced motion disables the blink.
+The dinner venue is Madhurima Sweets & Restaurant, Vibhuti Khand Road, Gomti
+Nagar. Its address, coordinates and Google Place ID were matched to the user's
+shared location at https://share.google/LjpnBh68BbPbHGtRs. Restaurant directions
+use that exact pin; wedding directions continue to use the Arya Samaj address.
 
 The hero shows the wedding details, venue and the first registration step
 together. The venue opens a glass map chooser with Google Maps directions and

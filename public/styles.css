@@ -267,6 +267,18 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .location-status:empty{display:none}
 @media(max-width:360px){.location-content{padding:28px 17px 20px}.location-content h2{font-size:29px}.travel-app{min-height:90px}.travel-app strong{font-size:12px}}
 
-/* A simple single-line dinner announcement before the wedding hero. */
-.dinner-invitation{container-type:inline-size;margin:0 0 24px;padding:9px 12px;border:1px solid #dce3cf;border-radius:8px;background:#f1f4e7cc;text-align:center}
-.dinner-invitation p{margin:0;font-size:clamp(8px,3.25cqi,14px);line-height:1.4;color:var(--olive);white-space:nowrap}
+/* A flush, single-line strip opens the dinner celebration details. */
+.layout.invitation-layout{margin-top:0}
+.dinner-invitation{container-type:inline-size;position:relative;z-index:1;margin:0;border-block:1px solid #dce3cf;background:#f1f4e7e6;text-align:center}
+.dinner-strip{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:40px;padding:7px 12px;background:transparent;color:var(--olive)}
+.dinner-strip:hover{background:#e8eedb99}
+.dinner-strip:focus-visible{outline-offset:-3px}
+.dinner-copy{font-size:clamp(7px,calc(3.25cqi - 1.8px),14px);line-height:1.4;white-space:nowrap}
+.dinner-eye{display:grid;place-items:center;flex-shrink:0;width:22px;height:22px;border:1px solid #c8d2b5;border-radius:50%;background:#ffffffb3;font-size:14px}
+.dinner-eye .bi{animation:dinner-blink 3.8s ease-in-out infinite;transform-origin:center}
+@keyframes dinner-blink{0%,84%,94%,100%{transform:scaleY(1)}89%{transform:scaleY(.08)}}
+.dinner-description{font-size:14px;line-height:1.6;color:var(--muted);margin:0 auto;max-width:340px}
+.dinner-audience{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:14px;color:var(--olive);margin:13px 0 22px}
+.dinner-location{display:grid;justify-items:center;gap:7px;padding:17px 14px;width:100%;border:1px solid #d6dec9;border-radius:14px;background:linear-gradient(135deg,#fff,#f1f5e9);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c9d1b77a;color:var(--olive);text-align:center}
+.dinner-location>.bi{font-size:25px}.dinner-location strong{font-size:15px;font-weight:600}.dinner-location>span{font-size:12px;line-height:1.5;color:var(--muted)}.dinner-location small{font-size:10px;margin-top:4px}
+.dinner-location:hover{background:#edf3e1}

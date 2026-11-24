@@ -7,5 +7,13 @@
   "time": "3:00 PM IST",
   "temple": "Arya Samaj Mandir, Aashiyana, Lucknow",
   "address": "M-127, Sector M, Aashiyana, Lucknow",
-  "city": "Lucknow"
+  "city": "Lucknow",
+  "dinner": {
+    "name": "Madhurima Sweets & Restaurant",
+    "address": "Vibhuti Khand Rd, Vibhuti Khand, Gomti Nagar, Lucknow, Uttar Pradesh 226010",
+    "latitude": 26.8654375,
+    "longitude": 80.9964375,
+    "googlePlaceId": "ChIJQWr_B7fimzkRopsHGbpwDso",
+    "sourceUrl": "https://share.google/LjpnBh68BbPbHGtRs"
+  }
 }
