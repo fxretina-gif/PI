@@ -5,8 +5,8 @@
   <title>Isha &amp; Praveen · The Witness Circle</title>
   <meta name="description" content="Isha and Praveen's Arya Samaj wedding, 26 November 2026 at 3 PM in Aashiyana, Lucknow. Four witnesses: two from the bride's side and two from the groom's side.">
   <meta name="theme-color" content="#741f3c"><meta name="robots" content="noindex,nofollow">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css?v=20261124-hero-name">
-  <script src="/config.js?v=20261124-hero-name" defer></script><script src="/app.js?v=20261124-hero-name" defer></script>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css?v=20261124-documents-v2">
+  <script src="/config.js?v=20261124-documents-v2" defer></script><script src="/app.js?v=20261124-documents-v2" defer></script>
 </head>
 <body>
   <a class="skip" href="#page-title">Skip to wedding details</a>
@@ -27,16 +27,29 @@
     <section class="form-panel" id="witness-form" aria-labelledby="form-title">
       <div id="registration">
         <div class="form-heading"><div><span class="eyebrow small">A SPECIAL ROLE, JUST FOR YOU</span><h2 id="form-title">Be our witness.</h2></div></div>
-        <p class="form-description">Just enter your name. We’ll coordinate the rest.</p>
-        <form id="registration-form" class="name-form" novalidate>
-          <div class="field"><label for="full-name">Name <span>*</span></label><input id="full-name" name="fullName" type="text" autocomplete="name" placeholder="Enter your name" required minlength="2" maxlength="80" aria-describedby="name-error"><small class="field-error" id="name-error" aria-live="polite"></small></div>
-          <div class="submit-error" id="submit-error" role="alert" hidden></div>
-          <button type="submit" id="submit" class="button primary">Count me in ♡</button>
-          <p class="privacy-line"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 9V6a5 5 0 0 1 10 0v3M3 9h14v9H3z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg> Your name is shared only with the organiser.</p>
+        <p class="form-description" id="form-description">Start with your name, then add your document photos.</p>
+        <div class="steps" aria-label="Registration progress"><button class="step current" id="step-name" type="button" aria-current="step"><span>1</span>Your name</button><span class="step-connector" aria-hidden="true"></span><button class="step" id="step-documents" type="button" disabled><span>2</span>Documents</button></div>
+        <form id="registration-form" novalidate>
+          <div id="details-fields">
+            <div class="field"><label for="full-name">Name <span>*</span></label><input id="full-name" name="fullName" type="text" autocomplete="name" placeholder="Enter your name" required minlength="2" maxlength="80" aria-describedby="name-error"><small class="field-error" id="name-error" aria-live="polite"></small></div>
+            <button type="button" id="continue" class="button primary">Continue to documents <span class="button-detail">Step 1 of 2</span></button>
+            <p class="privacy-line">Your details and photos are shared only with the organiser.</p>
+          </div>
+          <div id="document-fields" hidden>
+            <p class="document-for">Photos for <strong id="document-name"></strong></p>
+            <div class="photo-top"><p>Upload or take each photo.</p><span id="photo-count">0 / 3 ready</span></div>
+            <div id="document-cards"></div>
+            <p class="photo-help">One photo of you, your PAN card and the front of your Aadhaar card. Keep all card corners visible. Clear JPG, PNG or WebP photos work best.</p>
+            <label class="consent"><input id="consent" type="checkbox" required><span>I agree to share my name and these photos privately with the wedding organiser for witness coordination and review.</span></label>
+            <div class="submit-error" id="submit-error" role="alert" hidden></div>
+            <button type="submit" id="submit" class="button primary" disabled>Send for review <span class="button-detail" id="submit-count">Add all 3 photos</span></button>
+            <button type="button" id="edit-name" class="text-button">Edit your name</button>
+            <p class="privacy-line">Your photos are private. They never appear on the wedding page.</p>
+          </div>
         </form>
         <button id="open-witness" class="text-button invitation-link" type="button" aria-haspopup="dialog">A little invitation for you ♡</button>
       </div>
-      <section id="success" class="success" hidden aria-live="polite"><div class="success-icon" aria-hidden="true">♡</div><span class="eyebrow small">YOU’VE MADE OUR DAY</span><h2>Thank you,<br><em id="success-name">friend</em>.</h2><p>Your name has been received.</p><div class="review-status"><span class="review-dot"></span><strong>Waiting for organiser review</strong><p>Your place will be booked once your attendance is confirmed.</p></div><p class="fine-print" id="reference"></p><button class="button secondary" id="back-to-form" type="button">Back to the wedding</button></section>
+      <section id="success" class="success" hidden aria-live="polite"><div class="success-icon" aria-hidden="true">♡</div><span class="eyebrow small">YOU’VE MADE OUR DAY</span><h2>Thank you,<br><em id="success-name">friend</em>.</h2><p>Your name and all three photos have been received.</p><div class="review-status"><span class="review-dot"></span><strong>Waiting for organiser review</strong><p>Your place will be booked once your attendance is confirmed.</p></div><p class="fine-print" id="reference"></p><button class="button secondary" id="back-to-form" type="button">Back to the wedding</button></section>
       <div id="full-notice" class="full-notice" hidden role="status">Our circle is complete. All four witness places are booked. Thank you for being part of our story.</div>
     </section>
     </div>
@@ -58,5 +71,6 @@
       <small>Isha &amp; Praveen · 26 November 2026</small>
     </div>
   </dialog>
+  <dialog id="camera-dialog" aria-labelledby="camera-title"><div class="camera-heading"><h2 id="camera-title">Take a photo</h2><button type="button" id="close-camera" class="icon-button" aria-label="Close camera">✕</button></div><div class="camera-view"><video id="camera-video" autoplay playsinline muted></video><span class="camera-guide" aria-hidden="true"></span></div><p id="camera-hint">Keep the photo clear and well lit.</p><p id="camera-error" class="field-error" role="alert"></p><div class="camera-actions"><button type="button" id="flip-camera" class="button secondary">Switch camera</button><button type="button" id="capture-photo" class="button primary">Capture photo</button></div><button type="button" id="native-camera" class="text-button">Use phone camera instead</button></dialog>
   <footer class="site-footer"><span>With love, <strong data-event="couple">Isha &amp; Praveen</strong> <span aria-hidden="true">♡</span></span><a href="/admin">Organiser area</a></footer>
 </body></html>

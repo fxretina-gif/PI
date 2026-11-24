@@ -29,15 +29,19 @@ Built assets are committed so hosting needs no Node build process.
 
 ## Witness flow
 
-The hero shows the wedding details, venue and a simple Name text field together.
-The mobile page is centered. A separate invitation popup leads back to the same
-visible form. No dropdown, phone number or online document uploads are required.
-Each witness must bring Aadhaar, PAN and two passport-size photographs to the
-ceremony. Four witnesses are needed: two from the bride's side and two from the
-groom's side, coordinated by the organiser.
+The hero shows the wedding details, venue and the first registration step
+together. Step 1 asks only for a name, with no dropdown. Step 2 requires three
+photos: one passport-size witness photo, PAN card and Aadhaar front. Each supports
+upload, camera capture, preview and replacement. The mobile content is centered;
+the invitation popup leads back to the form. Photos are resized before upload,
+validated by the server and stored privately for organiser review.
+
+Each witness must also bring Aadhaar, PAN and two printed passport-size
+photographs to the ceremony. Four witnesses are needed: two from the bride's
+side and two from the groom's side, coordinated by the organiser.
 
 Submissions remain pending until manual review in `/admin`. The organiser checks
-name and attendance, then confirms a witness. Each approval books one of four
+name, document photos and attendance, then confirms a witness. Each approval books one of four
 places and updates the shared public counter: **1 witness booked · 3 open**.
 Concurrent approvals cannot exceed four. The counter refreshes every 15 seconds
 and when a visitor returns to the tab. Duplicate active names are
@@ -47,9 +51,9 @@ blocked; up to 12 submissions can await review.
 
 PHP 8.2+ and PDO SQLite are required. The database, document photos and password
 hash live in `witness-private/` **outside `public_html`** and are never in Git.
-Only the organiser's authenticated PHP session can see submissions or documents
-from earlier versions of the form. Earlier records and their photos are retained;
-new registrations save a name without collecting contact details or documents.
+Only the organiser's authenticated PHP session can see submissions and document
+photos. Earlier records and photos remain accessible. New submissions require
+PAN, Aadhaar front and one witness photo, without collecting a phone number.
 Cookies are Secure, HttpOnly and SameSite=Strict; admin writes also require a
 CSRF token and matching origin. Password attempts are rate-limited. Public
 responses contain counts and place numbers only.
@@ -74,9 +78,9 @@ deployments because it is outside the checkout. There are no package dependencie
 ## Verification
 
 `node tests/live.mjs .local/organiser-access.json` runs the live API smoke checks
-on a fresh empty site. It creates labelled synthetic names, tests validation,
-duplicate prevention and concurrent approvals, and deletes all its records. Do
-not run it after real witnesses have started registering. The name-only API was
+on a fresh empty site. It creates labelled synthetic names, tests required PAN uploads, document
+privacy, duplicate prevention and concurrent approvals, and deletes all its records. Do
+not run it after real witnesses have started registering. The upload API was
 also tested against an isolated temporary database on the hosting server. The
-hero form, popup, validation and success flow were checked at desktop, 390px and
+two-step form, popup, upload previews, camera capture and success flow were checked at desktop, 390px and
 320px widths without creating live submissions.

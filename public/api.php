@@ -5,7 +5,8 @@ header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: same-origin');
-const PHOTO_KINDS = ['portrait', 'aadhaar_front', 'aadhaar_back'];
+const PHOTO_KINDS = ['portrait', 'pan', 'aadhaar_front', 'aadhaar_back'];
+const REQUIRED_PHOTOS = ['portrait', 'pan', 'aadhaar_front'];
 function respond(array $body, int $status = 200): never {
     http_response_code($status); echo json_encode($body, JSON_THROW_ON_ERROR); exit;
 }
@@ -59,12 +60,27 @@ try {
     if ($path === '/api/availability' && $method === 'GET') respond(current_places($db));
     if ($path === '/api/witnesses' && $method === 'POST') {
         origin_check();
-        $data=body_json();
+        if ((int)($_SERVER['CONTENT_LENGTH']??0)>10000000) reject('The photos are too large. Please choose smaller photos.',413);
+        $data=$_POST;
         if (!is_string($data['submissionId']??null) || !is_string($data['fullName']??null)) reject('Please enter your name.');
         $id=$data['submissionId']; $name=trim($data['fullName']);
         if (!request_id($id)) reject('Please refresh the form and try again.');
         if (preg_match('/[\x00-\x1f\x7f]/',$name) || !preg_match('/^.{2,80}$/us',$name)) reject('Please enter your name (2–80 characters).');
         $name=preg_replace('/\s+/u',' ',$name);
+        if (($data['consent']??'')!=='yes') reject('Please agree to share your photos with the organiser.');
+        $old=row($db,'SELECT id,full_name FROM witness_requests WHERE id=?',[$id]);
+        if ($old) { if($old['full_name']!==$name) reject('Please refresh the form.',409);respond(['success'=>true,'reference'=>strtoupper(substr($id,0,8))]); }
+        $files=[];
+        foreach (REQUIRED_PHOTOS as $kind) {
+            $file=$_FILES[$kind]??null;
+            if (!$file || !is_array($file) || !is_string($file['tmp_name']??null) || ($file['error']??UPLOAD_ERR_NO_FILE)!==UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) reject('Please add your photo, PAN card and Aadhaar card photos.');
+            if (!$file['size'] || $file['size']>3000000) reject('Each photo must be under 3 MB.',413);
+            $info=@getimagesize($file['tmp_name']);
+            if (!$info || !in_array($info[2],[IMAGETYPE_JPEG,IMAGETYPE_PNG,IMAGETYPE_WEBP],true)) reject('Use a valid JPG, PNG or WebP photo.');
+            if (min($info[0],$info[1])<160 || max($info[0],$info[1])>8000) reject('Please use a clear photo between 160 and 8000 pixels.');
+            $files[$kind]=$file['tmp_name'];
+        }
+        $stored=[];
         $db->exec('BEGIN IMMEDIATE');
         try {
             $old=row($db,'SELECT id,full_name FROM witness_requests WHERE id=?',[$id]);
@@ -76,9 +92,16 @@ try {
             $q=$db->prepare('INSERT INTO witness_requests (id,full_name,phone,active_phone,relationship,consent_at,created_at) VALUES (?,?,?,?,?,?,?)');
             // Keep the existing schema and any earlier submissions intact.
             $q->execute([$id,$name,'',null,'',$now,$now]);
+            foreach ($files as $kind=>$temporary) {
+                $destination=photo_path($private,$id,$kind);
+                if (!move_uploaded_file($temporary,$destination)) throw new RuntimeException('Storage failed');
+                $stored[]=$destination;
+                if (!chmod($destination,0600)) throw new RuntimeException('Private file permissions failed');
+            }
             $db->exec('COMMIT');
         } catch (Throwable $e) {
             try {$db->exec('ROLLBACK');} catch(Throwable $ignored) {}
+            foreach ($stored as $file) if(is_file($file)) @unlink($file);
             throw $e;
         }
         respond(['success'=>true,'reference'=>strtoupper(substr($id,0,8))],201);
@@ -103,7 +126,10 @@ try {
         if ($path==='/api/admin/logout' && $method==='POST') {csrf_check();$_SESSION=[];session_destroy();respond(['success'=>true]);}
         if ($path==='/api/admin/requests' && $method==='GET') {
             $requests=$db->query('SELECT id,full_name,phone,relationship,status,slot,created_at,reviewed_at FROM witness_requests ORDER BY created_at DESC')->fetchAll();
-            foreach ($requests as &$request) $request['has_documents']=has_documents($private,$request['id']);
+            foreach ($requests as &$request) {
+                $request['documents']=array_values(array_filter(PHOTO_KINDS,fn($kind)=>is_file(photo_path($private,$request['id'],$kind))));
+                $request['has_documents']=(bool)$request['documents'];
+            }
             unset($request);
             respond(['requests'=>$requests,'availability'=>current_places($db)]);
         }

@@ -40,7 +40,10 @@ function render() {
     card.append(header);
     if (item.has_documents) {
     const images = node('div','admin-images');
-    for(const [kind,title] of [['portrait','Passport photo'],['aadhaar_front','Aadhaar front'],['aadhaar_back','Aadhaar back']]) {
+    const titles = {portrait:'Witness photo',pan:'PAN card',aadhaar_front:'Aadhaar front',aadhaar_back:'Aadhaar back'};
+    const documentKinds = item.documents || ['portrait','aadhaar_front','aadhaar_back'];
+    for(const kind of documentKinds) {
+      const title = titles[kind];
       const link = node('a'); link.href = `/api/admin/document/${item.id}/${kind}`; link.target='_blank'; link.rel='noopener';
       const image = node('img'); image.src=link.href; image.alt=title; image.loading='lazy';
       link.append(image,node('span',null,title)); images.append(link);
@@ -51,7 +54,7 @@ function render() {
     if(item.status === 'pending') {
       const checklist = node('div','review-checks');
       const requiredChecks = item.has_documents
-        ? [['photosChecked','All three photos are clear'],['identityChecked','Name and Aadhaar photos checked'],['attendanceChecked','Witness attendance confirmed']]
+        ? [['photosChecked','All uploaded photos are clear'],['identityChecked',item.documents?.includes('pan') ? 'Name, PAN and Aadhaar photos checked' : 'Name and Aadhaar photos checked'],['attendanceChecked','Attendance and witness side confirmed (2 per side)']]
         : [['identityChecked','Name confirmed'],['attendanceChecked','Attendance and witness side confirmed (2 per side)']];
       for(const [key,label] of requiredChecks) {
         const input=node('input');input.type='checkbox';input.id=`${item.id}-${key}`; checks[key]=input;

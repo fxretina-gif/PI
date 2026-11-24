@@ -15,6 +15,13 @@ h1.couple-title{font-size:53px;letter-spacing:-2px;margin:16px 0 12px}
 .hero-grid .form-heading{justify-content:center}
 .hero-grid .form-description{margin:10px auto 0;line-height:1.5}
 .name-form{margin-top:25px}
+.hero-grid .steps{justify-content:center;margin:22px 0 19px}
+.hero-grid .document-for{color:var(--muted);font-size:13px;margin:0 0 12px}
+.hero-grid .document-for strong{color:var(--wine);font-weight:600}
+.hero-grid .document-title,.hero-grid .photo-help,.hero-grid .consent{text-align:left}
+.hero-grid .document-card .document-state{white-space:nowrap}
+.hero-grid #document-fields .button.primary{justify-content:space-between}
+.hero-grid:has(#document-fields:not([hidden])){align-items:start}
 .hero-grid .name-form .button.primary{justify-content:center}
 .hero-grid .field input{text-align:center}
 .invitation-link{margin-top:12px;font-family:Georgia,serif;font-style:italic;font-size:14px}
