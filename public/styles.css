@@ -31,12 +31,12 @@ h1.couple-title{font-size:53px;letter-spacing:-2px;margin:16px 0 12px}
 .invitation-layout .witness-requirements{margin-top:20px}
 .invitation-layout .witness-requirements ul{padding:0;list-style:none}
 .witness-dialog{padding:0;width:calc(100% - 32px);max-width:450px;max-height:calc(100dvh - 32px);overflow:auto;border:1px solid #dfbec6;border-radius:22px;background:var(--paper)}
-.invitation-popup{position:relative;overflow:hidden;text-align:center;padding:42px 30px 30px;background:#fff}
+.invitation-popup{position:relative;overflow:hidden;text-align:center;padding:42px 30px 30px;background:#fff;container-type:inline-size}
 
 .invitation-popup h2{font-family:Georgia,serif;font-size:43px;line-height:1.1;font-weight:400;letter-spacing:-1px;color:var(--olive);margin:15px 0 20px}
 .invitation-popup h2 em{color:var(--olive)}
 .invitation-popup .eyebrow{justify-content:center}
-.invitation-popup p{font-size:14px;line-height:1.65;color:var(--muted);margin:9px auto 0;max-width:310px}
+.invitation-popup p{font-size:clamp(8px,3.45cqi,14px);line-height:1.65;color:var(--muted);margin:9px auto 0;max-width:none;white-space:nowrap}
 .invitation-popup .button.primary{justify-content:center;margin-top:24px}
 .invitation-popup small{display:block;font-family:Georgia,serif;font-size:13px;color:#967179;margin-top:17px}
 .popup-mark{display:grid;place-items:center;width:62px;height:62px;margin:0 auto 22px;border:1px solid #e7c9ce;border-radius:50%;background:var(--olive-light);color:var(--olive);font-size:43px;line-height:1}
@@ -235,3 +235,5 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .witness-side>p{font-size:11px;color:var(--muted);margin:5px 0 13px}
 .witness-side .slots{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
 @media(max-width:760px){.witness-groups{grid-template-columns:1fr;gap:25px}.witness-side h3{font-size:21px}.witness-side .slot{font-size:14px}.witness-side .slot-tag{font-size:11px;padding:3px 9px}}
+
+@media(max-width:760px){#details-fields{container-type:inline-size}#details-fields .privacy-line{font-size:clamp(7px,2.9cqi,11px);white-space:nowrap}}
