@@ -29,7 +29,8 @@ Built assets are committed so hosting needs no Node build process.
 
 ## Witness flow
 
-A matching fixed information button sits at the top left of Ganesha. It opens
+A small information icon sits at the left of the header, aligned with Ganesha,
+and scrolls away with the header. It has a 32 px circle and a 44 px tap target. It opens
 a centered glass guide with a scrollable body and an always-visible close button.
 Four expandable sections cover witnesses (open first), the couple's documents,
 ceremony items and quantities, and the ceremony/registration process. The guide

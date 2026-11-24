@@ -289,10 +289,10 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 @media(max-width:760px){.header-action{width:60px;height:60px;top:max(4px,env(safe-area-inset-top))}.treat-button{right:max(12px,env(safe-area-inset-right))}.treat-label>span{transform:translate(-50%,-50%) rotate(var(--treat-angle)) translateY(-22px)}.treat-cutlery{top:20px;left:13px}.treat-emoji{width:23px;height:23px;font-size:17px}}
 @media(prefers-reduced-motion:reduce){.treat-button:before,.treat-spark{display:none}}
 
-/* The matching information button opens an organised, scrollable wedding guide. */
-.guide-button{left:max(20px,env(safe-area-inset-left));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
-.guide-button>.bi{font-size:29px;line-height:1}
-.guide-button>span{font-size:10px;font-weight:600;letter-spacing:.3px;line-height:1.3}
+/* A small information icon belongs to the header and scrolls away with it. */
+.guide-button{position:absolute;left:14px;top:50%;transform:translateY(-50%);z-index:2;display:grid;place-items:center;width:44px;height:44px;padding:6px;border-radius:50%;background:transparent;color:var(--olive)}
+.guide-button>.bi{display:grid;place-items:center;width:32px;height:32px;border:1px solid #d6bd7880;border-radius:50%;background:linear-gradient(135deg,#fffdf4,#f0edcf);box-shadow:inset 0 1px 0 #fff,0 2px 3px #656a3414;font-size:18px;line-height:1}
+.guide-button:hover>.bi{background:#eee8c7;border-color:#c4b170}
 .guide-dialog{position:fixed;inset:0;width:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:20px;border:0;border-radius:0;background:transparent;box-shadow:none;overflow-y:auto;overflow-x:hidden}
 .guide-dialog[open]{display:grid;place-items:safe center}
 .guide-dialog::backdrop{background:#34482c70;backdrop-filter:blur(5px)}
@@ -336,7 +336,7 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .guide-sources a{display:inline-flex;align-items:center;gap:4px;min-height:36px;font-size:10px;text-decoration:underline;text-underline-offset:3px}
 .guide-sources .bi{font-size:9px}
 .guide-footnote{margin:15px 3px 0;text-align:center;font-size:10px;color:var(--muted);line-height:1.6}
-@media(max-width:760px){.guide-button{left:max(12px,env(safe-area-inset-left))}.guide-button>.bi{font-size:26px}.guide-button>span{font-size:9px}.guide-dialog{padding:14px}.guide-card{max-height:calc(100dvh - 28px);border-radius:22px}.guide-heading{padding:20px 19px 16px}.guide-heading h2{font-size:29px}.guide-body{padding:14px 14px 17px}.guide-section>summary{padding:13px;gap:9px}.guide-section-content{padding:0 13px 13px}.guide-section>summary>span{font-size:13px}.guide-list>li{font-size:12px;gap:7px}.guide-list small{font-size:10px}.guide-pill{font-size:9px;padding:4px 6px}}
+@media(max-width:760px){.guide-button{left:10px}.guide-dialog{padding:14px}.guide-card{max-height:calc(100dvh - 28px);border-radius:22px}.guide-heading{padding:20px 19px 16px}.guide-heading h2{font-size:29px}.guide-body{padding:14px 14px 17px}.guide-section>summary{padding:13px;gap:9px}.guide-section-content{padding:0 13px 13px}.guide-section>summary>span{font-size:13px}.guide-list>li{font-size:12px;gap:7px}.guide-list small{font-size:10px}.guide-pill{font-size:9px;padding:4px 6px}}
 .dinner-description{font-size:14px;line-height:1.6;color:var(--muted);margin:0 auto;max-width:340px}
 .dinner-audience{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:14px;color:var(--olive);margin:13px 0 22px}
 .dinner-location{display:grid;justify-items:center;gap:7px;padding:17px 14px;width:100%;border:1px solid #d6dec9;border-radius:14px;background:linear-gradient(135deg,#fff,#f1f5e9);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c9d1b77a;color:var(--olive);text-align:center}
