@@ -5,8 +5,8 @@
   <title>Isha &amp; Praveen · The Witness Circle</title>
   <meta name="description" content="Isha and Praveen's Arya Samaj wedding, 26 November 2026 at 3 PM in Aashiyana, Lucknow. Four witnesses: two from the bride's side and two from the groom's side.">
   <meta name="theme-color" content="#ffffff"><meta name="robots" content="noindex,nofollow">
-  <link rel="icon" href="/favicon.svg?v=20261125-witness-groups" type="image/svg+xml"><link rel="preload" href="/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/bootstrap-icons.min.css?v=1.13.2"><link rel="stylesheet" href="/styles.css?v=20261125-equal-hero">
-  <script src="/config.js?v=20261125-dinner-popup" defer></script><script src="/garden.js?v=20261125-witness-groups" defer></script><script src="/app.js?v=20261125-witness-panels" defer></script><script src="/celebration.js?v=20261125-royal-scroll" defer></script>
+  <link rel="icon" href="/favicon.svg?v=20261125-witness-groups" type="image/svg+xml"><link rel="preload" href="/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/bootstrap-icons.min.css?v=1.13.2"><link rel="stylesheet" href="/styles.css?v=20261125-special-invites">
+  <script src="/config.js?v=20261125-dinner-popup" defer></script><script src="/garden.js?v=20261125-witness-groups" defer></script><script src="/app.js?v=20261125-special-invites" defer></script><script src="/celebration.js?v=20261125-royal-scroll" defer></script>
 </head>
 <body>
   <div class="flower-garden" aria-hidden="true"><canvas id="flower-garden"></canvas></div>
@@ -82,7 +82,36 @@
       <section class="witness-requirements" aria-labelledby="requirements-title"><h2 id="requirements-title">What Each Witness Must Bring</h2><ul><li><strong>2 ID Cards:</strong> Aadhaar Card And PAN Card</li><li><strong>2 Passport-Size Photographs</strong> Per Witness</li></ul></section>
       <p class="story-foot">The Best Part Of Our Day? Having You Beside Us. <span aria-hidden="true"><i class="bi bi-heart" aria-hidden="true"></i></span></p>
     </section>
+    <section class="special-invites" aria-labelledby="special-invites-title">
+      <div class="special-heading"><span class="special-mark" aria-hidden="true"><i class="bi bi-envelope-heart"></i></span><span class="eyebrow small">FOR OUR OFFICE FAMILY</span><h2 id="special-invites-title">Special Invite</h2><p>Our celebration would be even more special with you.</p></div>
+      <div class="special-guests">
+        <button class="special-guest" type="button" data-invite-name="Abhishek" aria-haspopup="dialog" aria-controls="special-dialog"><strong>Abhishek</strong><small>Google Ads Team</small><i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        <button class="special-guest" type="button" data-invite-name="Aditya" aria-haspopup="dialog" aria-controls="special-dialog"><strong>Aditya</strong><small>CMO</small><i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        <button class="special-guest" type="button" data-invite-name="Bhoomika Rathi" aria-haspopup="dialog" aria-controls="special-dialog"><strong>Bhoomika Rathi</strong><i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        <button class="special-guest" type="button" data-invite-name="Daksh Verma" aria-haspopup="dialog" aria-controls="special-dialog"><strong>Daksh Verma</strong><i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        <button class="special-guest" type="button" data-invite-name="Divyanshu Srivastava" aria-haspopup="dialog" aria-controls="special-dialog"><strong>Divyanshu Srivastava</strong><small>CGO</small><i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        <button class="special-guest" type="button" data-invite-name="Praveen Srivastav" aria-haspopup="dialog" aria-controls="special-dialog"><strong>Praveen Srivastav</strong><small>Developer</small><i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        <button class="special-guest" type="button" data-invite-name="Ritik Bind" aria-haspopup="dialog" aria-controls="special-dialog"><strong>Ritik Bind</strong><small>Meta Ads Team</small><i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        <button class="special-guest" type="button" data-invite-name="Sachin" aria-haspopup="dialog" aria-controls="special-dialog"><strong>Sachin</strong><i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+        <button class="special-guest" type="button" data-invite-name="Ujjval Srivastava" aria-haspopup="dialog" aria-controls="special-dialog"><strong>Ujjval Srivastava</strong><i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+      </div>
+      <p class="special-hint">Tap Your Name For A Personal Invitation <i class="bi bi-heart" aria-hidden="true"></i></p>
+    </section>
   </main>
+  <dialog id="special-dialog" class="location-dialog special-dialog" aria-labelledby="special-title special-name" aria-describedby="special-message">
+    <button id="close-special" type="button" class="icon-button popup-close" aria-label="Close personal invitation"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+    <div class="special-content">
+      <span class="special-mark" aria-hidden="true"><i class="bi bi-envelope-heart"></i></span>
+      <span class="eyebrow small">WITH LOVE, JUST FOR YOU</span>
+      <h2 id="special-title">A Special Invite</h2>
+      <p class="special-salutation">Dear <strong id="special-name">Friend</strong>,</p>
+      <p id="special-message">We’d love you beside us as we celebrate our wedding and share a special dinner afterwards.</p>
+      <p class="special-couple" data-event="couple">Isha &amp; Praveen</p>
+      <p class="special-date"><i class="bi bi-calendar-heart" aria-hidden="true"></i><span data-event="date">26 November 2026</span> · <span data-event="time">3:00 PM IST</span></p>
+      <button id="special-location" class="special-location" type="button" aria-haspopup="dialog" aria-controls="location-dialog"><i class="bi bi-geo-alt" aria-hidden="true"></i><span><strong data-event="temple">Arya Samaj Mandir, Aashiyana, Lucknow</strong><small>View Wedding Venue <i class="bi bi-arrow-up-right" aria-hidden="true"></i></small></span></button>
+      <button id="special-dinner" class="button secondary" type="button" aria-haspopup="dialog" aria-controls="dinner-dialog">View Dinner Celebration <i class="bi bi-arrow-up-right" aria-hidden="true"></i></button>
+    </div>
+  </dialog>
   <dialog id="witness-dialog" class="witness-dialog" aria-labelledby="invitation-title">
     <button id="close-witness" type="button" class="icon-button popup-close" aria-label="Close witness invitation"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
     <div class="invitation-popup">

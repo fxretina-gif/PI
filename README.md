@@ -29,6 +29,11 @@ Built assets are committed so hosting needs no Node build process.
 
 ## Witness flow
 
+A “Special Invite” section below the witness information names the nine office
+guests from the supplied list, excluding Palak. Each name opens a personal
+invitation with the wedding date, venue maps and a link to the existing dinner
+celebration. These invitations do not book witness places or change submissions.
+
 A small information icon sits at the left of the header, aligned with Ganesha,
 and scrolls away with the header. It has a 32 px circle and a 44 px tap target. It opens
 a centered glass guide with a scrollable body and an always-visible close button.

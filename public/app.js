@@ -8,6 +8,18 @@ const witnessDialog = $('#witness-dialog');
 const locationDialog = $('#location-dialog');
 const dinnerDialog = $('#dinner-dialog');
 const guideDialog = $('#guide-dialog');
+const specialDialog = $('#special-dialog');
+for (const guest of document.querySelectorAll('[data-invite-name]')) {
+  guest.addEventListener('click', () => {
+    $('#special-name').textContent = guest.dataset.inviteName;
+    specialDialog.showModal();
+  });
+}
+$('#close-special').addEventListener('click', () => specialDialog.close());
+$('#special-dinner').addEventListener('click', () => {
+  specialDialog.close();
+  $('#open-dinner').click();
+});
 $('#open-guide').addEventListener('click', () => {
   guideDialog.showModal();
   $('.guide-body').scrollTop = 0;
@@ -23,7 +35,7 @@ $('#accept-invitation').addEventListener('click', () => {
   showStep(1);
   $('#full-name').focus({ preventScroll: true });
 });
-for (const dialog of [witnessDialog, locationDialog, dinnerDialog, guideDialog]) {
+for (const dialog of [witnessDialog, locationDialog, dinnerDialog, guideDialog, specialDialog]) {
   dialog.addEventListener('click', event => {
     if (event.target !== dialog) return;
     if (dialog === dinnerDialog || dialog === guideDialog) { dialog.close(); return; }
@@ -56,6 +68,7 @@ function openMapOptions(name, address, place = {}) {
   locationDialog.showModal();
 }
 $('#open-location').addEventListener('click', () => openMapOptions(venueName, venueStreet));
+$('#special-location').addEventListener('click', () => openMapOptions(venueName, venueStreet));
 const dinnerPlace = window.WEDDING?.dinner || {};
 const dinnerName = dinnerPlace.name || $('#dinner-restaurant').textContent;
 const dinnerAddress = dinnerPlace.address || $('#dinner-address').textContent;
