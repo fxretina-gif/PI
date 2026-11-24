@@ -1,4 +1,4 @@
-/* Two-step witness registration. Document photos stay private. */
+/* Name, document photos and final review. Document photos stay private. */
 const $ = selector => document.querySelector(selector);
 let sending = false;
 let availablePlaces = null;
@@ -27,7 +27,8 @@ for (const node of document.querySelectorAll('[data-event]')) {
 const kinds = [
   { key: 'portrait', title: 'Your photo', hint: 'Passport-size, face clearly visible', facing: 'user' },
   { key: 'pan', title: 'PAN card', hint: 'Front of your PAN card', facing: 'environment' },
-  { key: 'aadhaar_front', title: 'Aadhaar card', hint: 'Front, with your photo and details', facing: 'environment' },
+  { key: 'aadhaar_front', title: 'Aadhaar · front', hint: 'Front, with your photo and details', facing: 'environment' },
+  { key: 'aadhaar_back', title: 'Aadhaar · back', hint: 'Back, with address and all corners visible', facing: 'environment' },
 ];
 const photos = new Map();
 let processing = 0;
@@ -86,10 +87,13 @@ async function acceptPhoto(kind, file) {
   card.querySelector('.document-state').textContent = 'Preparing…';
   try {
     const image = await normalisePhoto(file);
+    const digest = await crypto.subtle.digest('SHA-256', await image.arrayBuffer());
+    const fingerprint = [...new Uint8Array(digest)].map(value => value.toString(16).padStart(2, '0')).join('');
     const old = photos.get(kind.key);
     if (old) URL.revokeObjectURL(old.url);
     const url = URL.createObjectURL(image);
-    photos.set(kind.key, { file: image, url });
+    photos.set(kind.key, { file: image, url, fingerprint });
+    $('#consent').checked = false;
     const preview = document.createElement('img');
     preview.src = url; preview.alt = `${kind.title} preview`;
     card.querySelector('.document-preview').replaceChildren(preview);
@@ -102,12 +106,21 @@ async function acceptPhoto(kind, file) {
   } finally { processing--; updateSubmit(); }
 }
 
+function duplicateAadhaar() {
+  const front = photos.get('aadhaar_front');
+  const back = photos.get('aadhaar_back');
+  return !!front && !!back && front.fingerprint === back.fingerprint;
+}
 function updateSubmit() {
   const complete = photos.size === kinds.length;
+  const duplicate = duplicateAadhaar();
   $('#continue').disabled = availablePlaces === 0 || sending;
   $('#photo-count').textContent = `${photos.size} / ${kinds.length} ready`;
-  $('#submit').disabled = !complete || !$('#consent').checked || !!processing || sending || availablePlaces === 0;
-  $('#submit-count').textContent = sending ? 'Please wait…' : processing ? 'Preparing photos…' : complete ? 'All 3 photos ready' : 'Add all 3 photos';
+  $('#documents-error').hidden = !duplicate;
+  $('#documents-error').textContent = duplicate ? 'Aadhaar front and back must be different photos. Please replace the back with the address side.' : '';
+  $('#review-documents').disabled = !complete || duplicate || !!processing || sending || availablePlaces === 0;
+  $('#submit').disabled = step !== 3 || !complete || duplicate || !$('#consent').checked || !!processing || sending || availablePlaces === 0;
+  $('#submit-count').textContent = sending ? 'Please wait…' : $('#consent').checked ? 'Ready to send' : 'Confirm your review';
 }
 $('#consent').addEventListener('change', updateSubmit);
 
@@ -120,24 +133,45 @@ function validName() {
   return valid ? name : null;
 }
 function showStep(next) {
-  if (next === 2 && !validName()) return;
+  const name = next > 1 ? validName() : null;
+  if (next > 1 && !name) return;
+  if (next === 3 && (photos.size !== kinds.length || processing || duplicateAadhaar())) return;
   step = next;
   $('#details-fields').hidden = next !== 1;
   $('#document-fields').hidden = next !== 2;
-  $('#step-name').className = next === 1 ? 'step current' : 'step done';
-  $('#step-documents').className = next === 2 ? 'step current' : 'step';
-  for (const [id, active] of [['#step-name', next === 1], ['#step-documents', next === 2]]) {
-    if (active) $(id).setAttribute('aria-current', 'step'); else $(id).removeAttribute('aria-current');
+  $('#review-fields').hidden = next !== 3;
+  for (const [id, number] of [['#step-name',1],['#step-documents',2],['#step-review',3]]) {
+    $(id).className = next === number ? 'step current' : next > number ? 'step done' : 'step';
+    if (next === number) $(id).setAttribute('aria-current','step'); else $(id).removeAttribute('aria-current');
   }
-  if (next === 2) {
+  if (next > 1) {
     $('#step-documents').disabled = false;
-    $('#document-name').textContent = validName();
+    $('#document-name').textContent = name;
   }
-  $('#form-description').textContent = next === 1 ? 'Start with your name, then add your document photos.' : 'Three clear photos, and you’re ready for organiser review.';
+  if (next === 3) {
+    $('#step-review').disabled = false;
+    $('#review-name').textContent = name;
+    $('#review-photos').replaceChildren(...kinds.map(kind => {
+      const figure = document.createElement('figure');
+      const image = document.createElement('img');
+      image.src = photos.get(kind.key).url;
+      image.alt = `${kind.title} for your review`;
+      const caption = document.createElement('figcaption');
+      caption.textContent = kind.title;
+      figure.append(image, caption);
+      return figure;
+    }));
+    $('#review-title').focus({ preventScroll:true });
+  }
+  $('#form-description').textContent = next === 1 ? 'Start with your name, then add your document photos.' : next === 2 ? 'Add your photo, PAN and both Aadhaar sides.' : 'One last check, then send for organiser verification.';
+  updateSubmit();
 }
 $('#continue').addEventListener('click', () => showStep(2));
 $('#step-name').addEventListener('click', () => showStep(1));
 $('#step-documents').addEventListener('click', () => showStep(2));
+$('#review-documents').addEventListener('click', () => showStep(3));
+$('#step-review').addEventListener('click', () => showStep(3));
+$('#edit-documents').addEventListener('click', () => { $('#consent').checked = false; showStep(2); });
 $('#edit-name').addEventListener('click', () => { showStep(1); $('#full-name').focus(); });
 $('#registration-form').addEventListener('keydown', event => {
   if (event.key === 'Enter' && step === 1) {
@@ -173,10 +207,10 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) refr
 $('#registration-form').addEventListener('submit', async event => {
   event.preventDefault();
   if (sending || processing || availablePlaces === 0) return;
-  if (step === 1) { showStep(2); return; }
+  if (step < 3) { showStep(step + 1); return; }
   const name = validName();
   if (!name) { showStep(1); return; }
-  if (photos.size !== kinds.length || !$('#consent').checked) return;
+  if (photos.size !== kinds.length || duplicateAadhaar() || !$('#consent').checked) return;
   if (submittedName && submittedName !== name) submissionId = crypto.randomUUID();
   submittedName = name;
   const error = $('#submit-error'); error.hidden = true;
@@ -184,6 +218,7 @@ $('#registration-form').addEventListener('submit', async event => {
   data.append('fullName', name);
   data.append('submissionId', submissionId);
   data.append('consent', 'yes');
+  data.append('reviewed', 'yes');
   for (const kind of kinds) data.append(kind.key, photos.get(kind.key).file, `${kind.key}.jpg`);
   sending = true; updateSubmit();
   try {

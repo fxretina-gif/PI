@@ -6,7 +6,7 @@ header('Cache-Control: no-store');
 header('X-Content-Type-Options: nosniff');
 header('Referrer-Policy: same-origin');
 const PHOTO_KINDS = ['portrait', 'pan', 'aadhaar_front', 'aadhaar_back'];
-const REQUIRED_PHOTOS = ['portrait', 'pan', 'aadhaar_front'];
+const REQUIRED_PHOTOS = ['portrait', 'pan', 'aadhaar_front', 'aadhaar_back'];
 function respond(array $body, int $status = 200): never {
     http_response_code($status); echo json_encode($body, JSON_THROW_ON_ERROR); exit;
 }
@@ -60,7 +60,7 @@ try {
     if ($path === '/api/availability' && $method === 'GET') respond(current_places($db));
     if ($path === '/api/witnesses' && $method === 'POST') {
         origin_check();
-        if ((int)($_SERVER['CONTENT_LENGTH']??0)>10000000) reject('The photos are too large. Please choose smaller photos.',413);
+        if ((int)($_SERVER['CONTENT_LENGTH']??0)>13000000) reject('The photos are too large. Please choose smaller photos.',413);
         $data=$_POST;
         if (!is_string($data['submissionId']??null) || !is_string($data['fullName']??null)) reject('Please enter your name.');
         $id=$data['submissionId']; $name=trim($data['fullName']);
@@ -68,18 +68,20 @@ try {
         if (preg_match('/[\x00-\x1f\x7f]/',$name) || !preg_match('/^.{2,80}$/us',$name)) reject('Please enter your name (2–80 characters).');
         $name=preg_replace('/\s+/u',' ',$name);
         if (($data['consent']??'')!=='yes') reject('Please agree to share your photos with the organiser.');
+        if (($data['reviewed']??'')!=='yes') reject('Please review and confirm all four photos before submitting.');
         $old=row($db,'SELECT id,full_name FROM witness_requests WHERE id=?',[$id]);
         if ($old) { if($old['full_name']!==$name) reject('Please refresh the form.',409);respond(['success'=>true,'reference'=>strtoupper(substr($id,0,8))]); }
         $files=[];
         foreach (REQUIRED_PHOTOS as $kind) {
             $file=$_FILES[$kind]??null;
-            if (!$file || !is_array($file) || !is_string($file['tmp_name']??null) || ($file['error']??UPLOAD_ERR_NO_FILE)!==UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) reject('Please add your photo, PAN card and Aadhaar card photos.');
+            if (!$file || !is_array($file) || !is_string($file['tmp_name']??null) || ($file['error']??UPLOAD_ERR_NO_FILE)!==UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) reject('Your photo, PAN, Aadhaar front and Aadhaar back are all required.');
             if (!$file['size'] || $file['size']>3000000) reject('Each photo must be under 3 MB.',413);
             $info=@getimagesize($file['tmp_name']);
             if (!$info || !in_array($info[2],[IMAGETYPE_JPEG,IMAGETYPE_PNG,IMAGETYPE_WEBP],true)) reject('Use a valid JPG, PNG or WebP photo.');
             if (min($info[0],$info[1])<160 || max($info[0],$info[1])>8000) reject('Please use a clear photo between 160 and 8000 pixels.');
             $files[$kind]=$file['tmp_name'];
         }
+        if (hash_file('sha256',$files['aadhaar_front'])===hash_file('sha256',$files['aadhaar_back'])) reject('Aadhaar front and back must be different photos.');
         $stored=[];
         $db->exec('BEGIN IMMEDIATE');
         try {

@@ -54,7 +54,7 @@ function render() {
     if(item.status === 'pending') {
       const checklist = node('div','review-checks');
       const requiredChecks = item.has_documents
-        ? [['photosChecked','All uploaded photos are clear'],['identityChecked',item.documents?.includes('pan') ? 'Name, PAN and Aadhaar photos checked' : 'Name and Aadhaar photos checked'],['attendanceChecked','Attendance and witness side confirmed (2 per side)']]
+        ? [['photosChecked','All uploaded photos are clear'],['identityChecked','Name and all ID documents checked'],['attendanceChecked','Attendance and witness side confirmed (2 per side)']]
         : [['identityChecked','Name confirmed'],['attendanceChecked','Attendance and witness side confirmed (2 per side)']];
       for(const [key,label] of requiredChecks) {
         const input=node('input');input.type='checkbox';input.id=`${item.id}-${key}`; checks[key]=input;

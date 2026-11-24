@@ -24,8 +24,8 @@ function png(colour){
 }
 function submission(id,name,omit){
   const data=new FormData();
-  for(const [key,value]of Object.entries({submissionId:id,fullName:name,consent:'yes'}))data.set(key,value);
-  for(const [i,kind]of ['portrait','pan','aadhaar_front'].entries())if(kind!==omit)data.set(kind,new File([png(60+i*70)],kind+'.png',{type:'image/png'}));
+  for(const [key,value]of Object.entries({submissionId:id,fullName:name,consent:'yes',reviewed:'yes'}))data.set(key,value);
+  for(const [i,kind]of ['portrait','pan','aadhaar_front','aadhaar_back'].entries())if(kind!==omit)data.set(kind,new File([png(50+i*50)],kind+'.png',{type:'image/png'}));
   return {method:'POST',body:data};
 }
 async function action(id,type,checks=true){return call('/api/admin/requests/'+id,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:type,photosChecked:checks,identityChecked:checks,attendanceChecked:checks})},true);}
@@ -39,6 +39,7 @@ try {
   assert.equal((await call('/api/admin/requests')).status,403);checks.push('Private organiser authentication');
   assert.equal((await call('/api/witnesses',submission(randomUUID(),''))).status,400);checks.push('Name validation');
   assert.equal((await call('/api/witnesses',submission(randomUUID(),'MISSING PAN TEST','pan'))).status,400);checks.push('PAN required');
+  assert.equal((await call('/api/witnesses',submission(randomUUID(),'MISSING AADHAAR BACK TEST','aadhaar_back'))).status,400);checks.push('Aadhaar back required');
   for(let i=0;i<5;i++){
     const id=randomUUID();ids.push(id);
     const result=await call('/api/witnesses',submission(id,'AUTOMATED TEST - DELETE '+i));
@@ -48,7 +49,7 @@ try {
   assert.equal((await call('/api/witnesses',submission(ids[0],'AUTOMATED TEST - DELETE 0'))).status,200);checks.push('Idempotent retry');
   assert.equal((await call('/api/witnesses',submission(randomUUID(),'automated test - delete 0'))).status,409);checks.push('Duplicate name protection');
   const pending=await (await call('/api/admin/requests',{},true)).json();
-  assert.ok(pending.requests.every(item=>item.has_documents && item.documents.includes('pan') && item.phone===''));checks.push('Private document storage');
+  assert.ok(pending.requests.every(item=>item.has_documents && item.documents.includes('pan') && item.documents.includes('aadhaar_back') && item.phone===''));checks.push('Private four-photo storage');
   assert.equal((await call(`/api/admin/document/${ids[0]}/pan`)).status,403);
   assert.equal((await call(`/api/admin/document/${ids[0]}/pan`,{},true)).status,200);checks.push('PAN access requires organiser login');
   assert.equal((await action(ids[0],'verify',false)).status,400);
