@@ -267,25 +267,26 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .location-status:empty{display:none}
 @media(max-width:360px){.location-content{padding:28px 17px 20px}.location-content h2{font-size:29px}.travel-app{min-height:90px}.travel-app strong{font-size:12px}}
 
-/* A flush, single-line strip opens the dinner celebration details. */
-.layout.invitation-layout{margin-top:0}
-.dinner-invitation{container-type:inline-size;position:relative;z-index:1;margin:0;border-block:1px solid #d6bd78;background:linear-gradient(110deg,#405127,#617238 45%,#4b602d 75%,#405127);background-size:200% 100%;box-shadow:inset 0 1px 0 #ffffff24,inset 0 -1px 0 #25331766;text-align:center;animation:dinner-glow 9s ease-in-out infinite}
-.dinner-strip{display:flex;align-items:center;justify-content:center;gap:15px;width:100%;min-height:52px;padding:9px 18px;background:transparent;color:#fff9e8}
-.dinner-strip:hover{background:#ffffff0d}
-.dinner-strip:focus-visible{outline-color:#f8df98;outline-offset:-4px}
-.dinner-marquee{display:block;min-width:0;max-width:100%;overflow:hidden}
-.dinner-track{display:flex;align-items:center;width:max-content}
-.dinner-copy{display:block;flex-shrink:0;font-size:16px;font-weight:550;line-height:1.4;white-space:nowrap;text-shadow:0 1px 1px #24301f4d}
-.dinner-copy-clone{display:none}
-.dinner-eye{display:grid;place-items:center;flex-shrink:0;width:32px;height:32px;border:1px solid #f6e4ad;border-radius:50%;background:radial-gradient(circle at 30% 20%,#fff1bd,#d8bd73);box-shadow:0 0 0 4px #f9e6a814,0 2px 7px #1e2d2038;color:#455629;font-size:20px;animation:dinner-eye-glow 3.8s ease-in-out infinite}
-.dinner-eye .bi{animation:dinner-blink 3.8s ease-in-out infinite;transform-origin:center}
-@keyframes dinner-blink{0%,84%,94%,100%{transform:scaleY(1)}89%{transform:scaleY(.08)}}
-@keyframes dinner-glow{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
-@keyframes dinner-eye-glow{0%,100%{box-shadow:0 0 0 4px #f9e6a814,0 2px 7px #1e2d2038}50%{box-shadow:0 0 0 6px #f9e6a82e,0 0 17px #f8dfa947}}
-@keyframes dinner-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media(max-width:760px){.dinner-strip{padding-inline:12px;gap:12px}.dinner-marquee{width:100%}.dinner-track{animation:dinner-marquee 18s linear infinite}.dinner-copy{font-size:15px;padding-right:40px}.dinner-copy-clone{display:block}}
-.dinner-strip:hover .dinner-track,.dinner-strip:focus-visible .dinner-track{animation-play-state:paused}
-@media(prefers-reduced-motion:reduce){.dinner-marquee{overflow-x:auto;scrollbar-width:none}.dinner-copy{padding-right:0}.dinner-copy-clone{display:none}}
+/* A fixed dinner invitation beside Ganesha, with cutlery tapping together. */
+.treat-button{position:fixed;z-index:10;top:max(5px,env(safe-area-inset-top));right:max(20px,env(safe-area-inset-right));width:66px;height:66px;padding:0;border:1px solid #d6bd78;border-radius:50%;background:radial-gradient(circle at 32% 20%,#fffdf1,#f0edcf 68%,#e2dbac);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c7bf8c80,0 5px 18px #656a3426;color:var(--olive);isolation:isolate;transition:background .2s,box-shadow .2s}
+.treat-button:before{content:"";position:absolute;inset:-4px;border:1px solid #cdb66e;border-radius:inherit;pointer-events:none;animation:treat-ring 3.4s ease-out infinite}
+.treat-button:hover{background:radial-gradient(circle at 32% 20%,#fffef7,#eae6c2 68%,#dcd29a);box-shadow:inset 0 1px 0 #fff,0 3px 0 #bcb17b80,0 6px 22px #656a3438}
+.treat-label{position:absolute;inset:0;font-family:Georgia,"Times New Roman",serif;font-size:11px;font-weight:700;line-height:1}
+.treat-label>span{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(var(--treat-angle)) translateY(-25px)}
+.treat-label>span:nth-child(1){--treat-angle:-30deg}.treat-label>span:nth-child(2){--treat-angle:-15deg}.treat-label>span:nth-child(3){--treat-angle:0deg}.treat-label>span:nth-child(4){--treat-angle:15deg}.treat-label>span:nth-child(5){--treat-angle:30deg}
+.treat-cutlery{position:absolute;top:23px;left:16px;width:32px;height:32px}
+.treat-utensil{position:absolute;inset:0;display:block;font-size:32px;line-height:1}
+.treat-utensil .bi{display:block;width:32px;height:32px}
+.treat-fork{clip-path:inset(0 50% 0 0);transform-origin:25% 90%;animation:treat-fork-tap 3.4s ease-in-out infinite}
+.treat-knife{clip-path:inset(0 0 0 50%);transform-origin:75% 90%;animation:treat-knife-tap 3.4s ease-in-out infinite}
+.treat-spark{position:absolute;top:-8px;left:11px;font-size:13px;color:#ad8533;opacity:0;animation:treat-clink 3.4s ease-in-out infinite}
+.treat-emoji{position:absolute;right:-3px;bottom:-3px;display:grid;place-items:center;width:25px;height:25px;border:1px solid #e0d59f;border-radius:50%;background:#fffcee;box-shadow:0 2px 5px #656a3426;font-size:18px;line-height:1}
+@keyframes treat-fork-tap{0%,20%,54%,100%{transform:rotate(-10deg)}30%,42%{transform:rotate(18deg)}36%{transform:rotate(2deg)}}
+@keyframes treat-knife-tap{0%,20%,54%,100%{transform:rotate(10deg)}30%,42%{transform:rotate(-18deg)}36%{transform:rotate(-2deg)}}
+@keyframes treat-clink{0%,25%,35%,39%,48%,100%{opacity:0;transform:scale(.5)}30%,43%{opacity:1;transform:scale(1.1)}}
+@keyframes treat-ring{0%,58%,100%{opacity:0;transform:scale(1)}12%{opacity:.45}45%{opacity:0;transform:scale(1.14)}}
+@media(max-width:760px){.treat-button{width:60px;height:60px;top:max(4px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right))}.treat-label>span{transform:translate(-50%,-50%) rotate(var(--treat-angle)) translateY(-22px)}.treat-cutlery{top:20px;left:13px}.treat-emoji{width:23px;height:23px;font-size:17px}}
+@media(prefers-reduced-motion:reduce){.treat-button:before,.treat-spark{display:none}}
 .dinner-description{font-size:14px;line-height:1.6;color:var(--muted);margin:0 auto;max-width:340px}
 .dinner-audience{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:14px;color:var(--olive);margin:13px 0 22px}
 .dinner-location{display:grid;justify-items:center;gap:7px;padding:17px 14px;width:100%;border:1px solid #d6dec9;border-radius:14px;background:linear-gradient(135deg,#fff,#f1f5e9);box-shadow:inset 0 1px 0 #fff,0 3px 0 #c9d1b77a;color:var(--olive);text-align:center}
