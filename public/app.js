@@ -20,6 +20,7 @@ $('#accept-invitation').addEventListener('click', () => {
 for (const dialog of [witnessDialog, locationDialog, dinnerDialog]) {
   dialog.addEventListener('click', event => {
     if (event.target !== dialog) return;
+    if (dialog === dinnerDialog) { dialog.close(); return; }
     const rect = dialog.getBoundingClientRect();
     if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
   });

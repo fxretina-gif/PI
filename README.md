@@ -34,6 +34,10 @@ hero: “After the wedding, let’s celebrate together over a special dinner.”
 strip and blinking eye open a dinner invitation. Its restaurant location opens
 the same map chooser and copy-address action as the wedding venue. Closing the
 map chooser returns to the dinner invitation. Reduced motion disables the blink.
+The dinner invitation unrolls as a parchment scroll with gold rollers and tassels,
+styled from the user's reference. A brief canvas maple-leaf burst runs on opening,
+cleans up on close and is skipped for reduced motion. Restaurant map controls remain
+available inside the scroll.
 The dinner venue is Madhurima Sweets & Restaurant, Vibhuti Khand Road, Gomti
 Nagar. Its address, coordinates and Google Place ID were matched to the user's
 shared location at https://share.google/LjpnBh68BbPbHGtRs. Restaurant directions
