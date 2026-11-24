@@ -231,6 +231,7 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .special-guest strong{font-size:14px;line-height:1.4;font-weight:500;max-width:100%}
 .special-guest small{font-size:10px;color:var(--muted);line-height:1.4}
 .special-guest>.bi{position:absolute;top:7px;right:8px;font-size:9px;color:#8b966c}
+.special-guest:last-child:nth-child(3n+1){grid-column:2}
 .special-guest:hover{transform:translateY(-2px);background:#eef3e2;box-shadow:inset 0 1px 0 #fff,0 3px 0 #c1cda94d,0 8px 15px #52673c12}
 .special-hint{font-size:11px;line-height:1.5;color:var(--olive);margin-top:18px}
 .special-hint .bi{font-size:12px;margin-left:3px}

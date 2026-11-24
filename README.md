@@ -29,8 +29,9 @@ Built assets are committed so hosting needs no Node build process.
 
 ## Witness flow
 
-A “Special Invite” section below the witness information names the nine office
-guests from the supplied list, excluding Palak. Each name opens a personal
+A “Special Invite” section below the witness information names the ten office
+guests from the supplied list plus Shivanshu, excluding Palak. Sachin appears once.
+Each name opens a personal
 invitation with the wedding date, venue maps and a link to the existing dinner
 celebration. These invitations do not book witness places or change submissions.
 
