@@ -224,3 +224,14 @@ h1.couple-title{display:flex;align-items:center;justify-content:center;gap:.18em
 .slot .slot-tag.confirmed{color:#4b612c;background:#e8f0d8;border-color:#bdcda3}
 @media(max-width:760px){.hero-grid #form-description{font-size:clamp(10px,2.85vw,12px);max-width:none;white-space:nowrap;letter-spacing:-.12px;line-height:1.5}.slot{min-height:128px;padding:10px 4px;gap:6px}.slot-picture{width:48px;height:60px}.witness-avatar{width:48px;height:60px}.slot .slot-tag{font-size:10px;padding:3px 6px}}
 @media(max-width:360px){.hero-grid #form-description{font-size:10px;letter-spacing:-.2px}.slot .slot-tag{font-size:9px;padding:3px 5px}.slot-picture,.witness-avatar{width:44px;height:55px}.slot{min-height:122px}}
+
+/* Two clear witness groups and a compact, personal thank-you. */
+.success{container-type:inline-size}
+.success h2{font-size:28px;font-size:clamp(20px,8cqi,32px);line-height:1.2;letter-spacing:-.6px;white-space:nowrap}
+#success-name{color:var(--red)}
+.witness-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:18px}
+.witness-side{min-width:0;text-align:center}
+.witness-side h3{font-family:Georgia,"Times New Roman",serif;font-size:20px;font-weight:400;line-height:1.3;color:var(--olive)}
+.witness-side>p{font-size:11px;color:var(--muted);margin:5px 0 13px}
+.witness-side .slots{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+@media(max-width:760px){.witness-groups{grid-template-columns:1fr;gap:25px}.witness-side h3{font-size:21px}.witness-side .slot{font-size:14px}.witness-side .slot-tag{font-size:11px;padding:3px 9px}}

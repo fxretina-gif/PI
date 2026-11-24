@@ -187,7 +187,7 @@ async function refreshAvailability() {
     if (!response.ok) throw new Error(result.error);
     availablePlaces = result.open;
     $('#availability').innerHTML = `<span><strong>${result.booked}</strong> ${result.booked === 1 ? 'witness' : 'witnesses'} booked</span><span class="divider" aria-hidden="true"></span><span><strong>${result.open}</strong> open</span>`;
-    $('#slots').replaceChildren(...result.slots.map(slot => {
+    const cards = result.slots.map(slot => {
       const element = document.createElement('div');
       element.className = `slot${slot.booked ? ' booked' : ''}`;
       element.setAttribute('aria-label', `Witness ${slot.number}: ${slot.booked ? 'booked' : 'open'}`);
@@ -211,8 +211,10 @@ async function refreshAvailability() {
       tag.className = `slot-tag${slot.booked ? ' confirmed' : ''}`;
       tag.textContent = slot.booked ? 'Thankyou 😊' : 'Open Place';
       element.append(picture,label,tag);
-      return element;
-    }));
+      return { number: slot.number, element };
+    });
+    $('#bride-slots').replaceChildren(...cards.filter(card => card.number <= 2).map(card => card.element));
+    $('#groom-slots').replaceChildren(...cards.filter(card => card.number >= 3).map(card => card.element));
     $('#full-notice').hidden = result.open !== 0;
     updateSubmit();
   } catch {

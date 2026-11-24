@@ -46,7 +46,10 @@ pauses when the page is hidden and becomes still for reduced-motion preferences.
 
 Each witness must also bring Aadhaar, PAN and two printed passport-size
 photographs to the ceremony. Four witnesses are needed: two from the bride's
-side and two from the groom's side, coordinated by the organiser.
+side and two from the groom's side, coordinated by the organiser. Cards 1–2 sit
+under “Isha - Bride” and cards 3–4 under “Praveen - Groom”; the groups stack on
+mobile. The submission thank-you uses a smaller single-line heading with the
+witness’s first name in the same muted red as the couple’s heart.
 
 Submissions remain pending until manual review in `/admin`. The organiser checks
 name, document photos and attendance, then confirms a witness. Each approval books one of four

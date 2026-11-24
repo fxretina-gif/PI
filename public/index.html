@@ -5,13 +5,13 @@
   <title>Isha &amp; Praveen · The Witness Circle</title>
   <meta name="description" content="Isha and Praveen's Arya Samaj wedding, 26 November 2026 at 3 PM in Aashiyana, Lucknow. Four witnesses: two from the bride's side and two from the groom's side.">
   <meta name="theme-color" content="#ffffff"><meta name="robots" content="noindex,nofollow">
-  <link rel="icon" href="/favicon.svg?v=20261124-witness-portraits" type="image/svg+xml"><link rel="preload" href="/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/bootstrap-icons.min.css?v=1.13.2"><link rel="stylesheet" href="/styles.css?v=20261124-witness-portraits">
-  <script src="/config.js?v=20261124-witness-portraits" defer></script><script src="/garden.js?v=20261124-witness-portraits" defer></script><script src="/app.js?v=20261124-witness-portraits" defer></script>
+  <link rel="icon" href="/favicon.svg?v=20261125-witness-groups" type="image/svg+xml"><link rel="preload" href="/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/bootstrap-icons.min.css?v=1.13.2"><link rel="stylesheet" href="/styles.css?v=20261125-witness-groups">
+  <script src="/config.js?v=20261125-witness-groups" defer></script><script src="/garden.js?v=20261125-witness-groups" defer></script><script src="/app.js?v=20261125-witness-groups" defer></script>
 </head>
 <body>
   <div class="flower-garden" aria-hidden="true"><canvas id="flower-garden"></canvas></div>
   <a class="skip" href="#page-title">Skip to wedding details</a>
-  <header class="site-header devotional-header"><a class="ganesha-home" href="/" aria-label="Wedding home"><img class="ganesha-full" src="/ganesha.jpg?v=20261124-witness-portraits" width="46" height="56" alt="Lord Ganesha"></a></header>
+  <header class="site-header devotional-header"><a class="ganesha-home" href="/" aria-label="Wedding home"><img class="ganesha-full" src="/ganesha.jpg?v=20261125-witness-groups" width="46" height="56" alt="Lord Ganesha"></a></header>
   <main class="layout invitation-layout">
     <div class="hero-grid">
     <section class="story" aria-labelledby="page-title">
@@ -60,12 +60,20 @@
         </form>
         <button id="open-witness" class="text-button invitation-link" type="button" aria-haspopup="dialog">A little invitation for you <i class="bi bi-heart" aria-hidden="true"></i></button>
       </div>
-      <section id="success" class="success" hidden aria-live="polite"><div class="success-icon" aria-hidden="true"><i class="bi bi-heart" aria-hidden="true"></i></div><span class="eyebrow small">YOU’VE MADE OUR DAY</span><h2>Thank you,<br><em id="success-name">friend</em>.</h2><p>Your name and all four photos have been received.</p><div class="review-status"><span class="review-dot"></span><strong>Waiting for organiser review</strong><p>Your place will be booked after the organiser verifies your documents and attendance.</p></div><p class="fine-print" id="reference"></p><button class="button secondary" id="back-to-form" type="button">Back to the wedding</button></section>
+      <section id="success" class="success" hidden aria-live="polite"><div class="success-icon" aria-hidden="true"><i class="bi bi-heart" aria-hidden="true"></i></div><span class="eyebrow small">YOU’VE MADE OUR DAY</span><h2>Thank you, <em id="success-name">friend</em>.</h2><p>Your name and all four photos have been received.</p><div class="review-status"><span class="review-dot"></span><strong>Waiting for organiser review</strong><p>Your place will be booked after the organiser verifies your documents and attendance.</p></div><p class="fine-print" id="reference"></p><button class="button secondary" id="back-to-form" type="button">Back to the wedding</button></section>
       <div id="full-notice" class="full-notice" hidden role="status">Our circle is complete. All four witness places are booked. Thank you for being part of our story.</div>
     </section>
     </div>
     <section class="witness-details" aria-label="Witness places and requirements">
-      <section class="circle-card" aria-labelledby="circle-title"><div class="section-top"><h2 id="circle-title">Our witness circle</h2><span class="required-pill">4 witnesses total</span></div><p class="witness-split"><span><strong>2 witnesses</strong> from the bride’s side</span><span><strong>2 witnesses</strong> from the groom’s side</span></p><div id="availability" class="availability" aria-live="polite"><strong>Checking availability…</strong></div><div class="slots" id="slots" aria-label="Four witness places"><div class="slot loading">—</div><div class="slot loading">—</div><div class="slot loading">—</div><div class="slot loading">—</div></div><p class="fine-print">A place is booked after the organiser confirms your attendance.</p></section>
+      <section class="circle-card" aria-labelledby="circle-title">
+        <div class="section-top"><h2 id="circle-title">Our witness circle</h2><span class="required-pill">4 witnesses total</span></div>
+        <div id="availability" class="availability" aria-live="polite"><strong>Checking availability…</strong></div>
+        <div class="witness-groups" id="slots" aria-label="Four witness places">
+          <section class="witness-side" aria-labelledby="bride-witnesses"><h3 id="bride-witnesses">Isha - Bride</h3><p>2 witnesses from the bride’s side</p><div class="slots" id="bride-slots"><div class="slot loading">—</div><div class="slot loading">—</div></div></section>
+          <section class="witness-side" aria-labelledby="groom-witnesses"><h3 id="groom-witnesses">Praveen - Groom</h3><p>2 witnesses from the groom’s side</p><div class="slots" id="groom-slots"><div class="slot loading">—</div><div class="slot loading">—</div></div></section>
+        </div>
+        <p class="fine-print">A place is booked after the organiser confirms your attendance.</p>
+      </section>
       <section class="witness-requirements" aria-labelledby="requirements-title"><h2 id="requirements-title">What each witness must bring</h2><ul><li><strong>2 ID cards:</strong> Aadhaar card and PAN card</li><li><strong>2 passport-size photographs</strong> per witness</li></ul></section>
       <p class="story-foot">The best part of our day? Having you beside us. <span aria-hidden="true"><i class="bi bi-heart" aria-hidden="true"></i></span></p>
     </section>
